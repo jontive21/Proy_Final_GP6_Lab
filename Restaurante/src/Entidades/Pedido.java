@@ -12,14 +12,16 @@ import java.util.List;
  */
 public class Pedido {
     private int id;
+    private Cliente cliente;
     private Mesero mesero;
     private Mesa mesa;
     private List<Producto> productos;
     private double monto;
     private boolean pagado;
 
-    public Pedido(int id, Mesero mesero, Mesa mesa, List<Producto> productos, double monto) {
+    public Pedido(int id, Cliente cliente, Mesero mesero, Mesa mesa, List<Producto> productos, double monto) {
         this.id = id;
+        this.cliente = cliente;
         this.mesero = mesero;
         this.mesa = mesa;
         this.productos = productos;
@@ -35,6 +37,14 @@ public class Pedido {
         this.id = id;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+   
     public Mesero getMesero() {
         return mesero;
     }

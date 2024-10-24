@@ -4,6 +4,7 @@
  */
 package Entidades;
 
+
 /**
  *
  * @author Esquina del Vidrio
@@ -14,7 +15,8 @@ public class Restaurante {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+    // Crear objetos de las clases de acceso a datos
+    
     }
     
 }
