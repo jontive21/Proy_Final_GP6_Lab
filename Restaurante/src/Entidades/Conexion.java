@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Esquina del Vidrio
  */
 public class Conexion {
-    private static final String URL = "jdbc:mariadb://localhost:3306/restaurante_grupo6";
+    private static final String URL = "jdbc:mariadb://localhost:3306/restaurante_g6";
     private static final String USUARIO = "root";
     private static final String PASSWORD = "";
     private static Connection conexion = null;
