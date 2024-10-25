@@ -4,9 +4,6 @@
  */
 package Entidades;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public class Cliente {
     private int id;
     private String nombre;

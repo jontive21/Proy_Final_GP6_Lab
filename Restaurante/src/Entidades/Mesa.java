@@ -4,6 +4,7 @@
  */
 package Entidades;
 
+
 /**
  *
  * @author Esquina del Vidrio
@@ -13,10 +14,12 @@ public class Mesa {
     private int capacidad;
     private String estado;
 
-    public Mesa(int numero, int capacidad, String estado) {
+
+     public Mesa(int numero, int capacidad, String estado) {
         this.numero = numero;
         this.capacidad = capacidad;
         this.estado = estado;
+
     }
 
     public int getNumero() {
@@ -42,4 +45,6 @@ public class Mesa {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+         
+    
 }

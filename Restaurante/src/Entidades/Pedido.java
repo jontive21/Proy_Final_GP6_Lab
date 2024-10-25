@@ -4,6 +4,7 @@
  */
 package Entidades;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -17,9 +18,11 @@ public class Pedido {
     private Mesa mesa;
     private List<Producto> productos;
     private double monto;
-    private boolean pagado;
+    private boolean pagado; /*pagado o impago*/
+    private boolean estado; /*pendiente o entregado*/
+    private Date fechaPedido;
 
-    public Pedido(int id, Cliente cliente, Mesero mesero, Mesa mesa, List<Producto> productos, double monto) {
+    public Pedido(int id, Cliente cliente, Mesero mesero, Mesa mesa, List<Producto> productos, double monto, Date fechaPedido, boolean pagado, boolean estado ) {
         this.id = id;
         this.cliente = cliente;
         this.mesero = mesero;
@@ -27,6 +30,8 @@ public class Pedido {
         this.productos = productos;
         this.monto = monto;
         this.pagado = false;
+        this.estado= false;
+        this.fechaPedido = fechaPedido;
     }
 
     public int getId() {
@@ -83,5 +88,21 @@ public class Pedido {
 
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+    
+    public Date getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(Date fechaPedido) {
+        this.fechaPedido = fechaPedido;
     }
 }
