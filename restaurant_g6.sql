@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2024 a las 02:49:56
+-- Tiempo de generación: 25-10-2024 a las 03:18:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,19 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `restaurant_g6`
 --
+CREATE DATABASE IF NOT EXISTS `restaurant_g6` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `restaurant_g6`;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_pedido`
+-- Estructura de tabla para la tabla `cliente`
 --
 
-CREATE TABLE `detalle_pedido` (
-  `id_detalle` int(11) NOT NULL,
-  `id_pedido` int(11) DEFAULT NULL,
-  `id_producto` int(11) DEFAULT NULL,
-  `cantidad` int(11) DEFAULT NULL,
-  `subtotal` decimal(10,2) DEFAULT NULL
+CREATE TABLE `cliente` (
+  `id_cliente` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `id_mesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -43,17 +43,16 @@ CREATE TABLE `detalle_pedido` (
 
 CREATE TABLE `mesa` (
   `id_mesa` int(11) NOT NULL,
-  `numero` int(11) DEFAULT NULL,
   `capacidad` int(11) DEFAULT NULL,
-  `estado` enum('libre','ocupada','atendida','cobrada') DEFAULT 'libre'
+  `estado` varchar(10) NOT NULL DEFAULT 'Libre'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `mesa`
 --
 
-INSERT INTO `mesa` (`id_mesa`, `numero`, `capacidad`, `estado`) VALUES
-(1, 1, 4, 'libre');
+INSERT INTO `mesa` (`id_mesa`, `capacidad`, `estado`) VALUES
+(1, 4, 'libre');
 
 -- --------------------------------------------------------
 
@@ -64,16 +63,15 @@ INSERT INTO `mesa` (`id_mesa`, `numero`, `capacidad`, `estado`) VALUES
 CREATE TABLE `mesero` (
   `id_mesero` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
-  `dni` varchar(10) DEFAULT NULL,
-  `fecha_registro` date DEFAULT NULL
+  `dni` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `mesero`
 --
 
-INSERT INTO `mesero` (`id_mesero`, `nombre`, `dni`, `fecha_registro`) VALUES
-(1, 'Juan Pérez', '12345678', '2024-10-07');
+INSERT INTO `mesero` (`id_mesero`, `nombre`, `dni`) VALUES
+(1, 'Juan Pérez', '12345678');
 
 -- --------------------------------------------------------
 
@@ -85,8 +83,11 @@ CREATE TABLE `pedido` (
   `id_pedido` int(11) NOT NULL,
   `id_mesa` int(11) DEFAULT NULL,
   `id_mesero` int(11) DEFAULT NULL,
-  `estado` enum('pendiente','entregado','pagado') DEFAULT 'pendiente',
-  `fecha_pedido` datetime DEFAULT NULL
+  `id_cliente` int(11) NOT NULL,
+  `fecha_pedido` datetime DEFAULT NULL,
+  `estado` varchar(10) NOT NULL,
+  `pagado` varchar(10) NOT NULL,
+  `monto` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -99,8 +100,8 @@ CREATE TABLE `producto` (
   `id_producto` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `cantidad` int(11) DEFAULT NULL,
-  `precio` decimal(10,2) DEFAULT NULL,
-  `tipo_producto` enum('comida','bebida') NOT NULL
+  `precio` double DEFAULT NULL,
+  `tipo_producto` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -108,19 +109,28 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `nombre`, `cantidad`, `precio`, `tipo_producto`) VALUES
-(1, 'Pizza', 10, 500.00, 'comida');
+(1, 'Pizza simple', 10, 500, 'comida'),
+(2, 'Pizza Calabresa', 10, 1200, 'comida'),
+(3, 'Lomo Completo', 15, 1500, 'comida'),
+(4, 'Hamburguesa Doble', 20, 900, 'comida'),
+(5, 'Taco de Pollo', 25, 800, 'comida'),
+(6, 'Ensalada César', 18, 700, 'comida'),
+(7, 'Cerveza Artesanal', 30, 500, 'bebida'),
+(8, 'Gaseosa Coca-Cola', 50, 250, 'bebida'),
+(9, 'Jugo de Naranja', 40, 300, 'bebida'),
+(10, 'Agua Mineral', 60, 200, 'bebida'),
+(11, 'Café Espresso', 35, 400, 'bebida');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `detalle_pedido`
+-- Indices de la tabla `cliente`
 --
-ALTER TABLE `detalle_pedido`
-  ADD PRIMARY KEY (`id_detalle`),
-  ADD KEY `id_pedido` (`id_pedido`),
-  ADD KEY `id_producto` (`id_producto`);
+ALTER TABLE `cliente`
+  ADD PRIMARY KEY (`id_cliente`),
+  ADD UNIQUE KEY `mesa asignada` (`id_mesa`);
 
 --
 -- Indices de la tabla `mesa`
@@ -140,6 +150,7 @@ ALTER TABLE `mesero`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id_pedido`),
+  ADD UNIQUE KEY `id_cliente` (`id_cliente`),
   ADD KEY `id_mesa` (`id_mesa`),
   ADD KEY `id_mesero` (`id_mesero`);
 
@@ -154,10 +165,10 @@ ALTER TABLE `producto`
 --
 
 --
--- AUTO_INCREMENT de la tabla `detalle_pedido`
+-- AUTO_INCREMENT de la tabla `cliente`
 --
-ALTER TABLE `detalle_pedido`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cliente`
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa`
@@ -181,25 +192,25 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `detalle_pedido`
+-- Filtros para la tabla `cliente`
 --
-ALTER TABLE `detalle_pedido`
-  ADD CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`),
-  ADD CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
+ALTER TABLE `cliente`
+  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id_mesa`);
 
 --
 -- Filtros para la tabla `pedido`
 --
 ALTER TABLE `pedido`
   ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id_mesa`),
-  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`id_mesero`) REFERENCES `mesero` (`id_mesero`);
+  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`id_mesero`) REFERENCES `mesero` (`id_mesero`),
+  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
