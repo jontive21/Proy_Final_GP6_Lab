@@ -4,6 +4,9 @@
  */
 package Vistas;
 
+import Entidades.Mesa;
+import Persistencia.MesaData;
+
 
 /**
  *
@@ -15,8 +18,12 @@ public class Restaurante {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    // Crear objetos de las clases de acceso a datos
-    
+  
+    Mesa mesa = new Mesa(1, 5, "Ocupada");
+    MesaData mesa1 = new MesaData();
+    mesa1.crearMesa(mesa);
+    mesa1.listarMesasPorEstado("Ocupada");
+    mesa1.cambiarEstadoMesa(1, "libre");
     }
     
 }

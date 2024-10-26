@@ -9,22 +9,22 @@ package Entidades;
  * @author Esquina del Vidrio
  */
 public class Mesa {
-    private int numero;
+    private int idMesa;
     private int capacidad;
     private String estado;
 
-    public Mesa(int numero, int capacidad, String estado) {
-        this.numero = numero;
+    public Mesa(int idMesa, int capacidad, String estado) {
+        this.idMesa = idMesa;
         this.capacidad = capacidad;
         this.estado = estado;
     }
 
-    public int getNumero() {
-        return numero;
+    public int getIdMesa() {
+        return idMesa;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setIdMesa(int idMesa) {
+        this.idMesa = idMesa;
     }
 
     public int getCapacidad() {

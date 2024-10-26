@@ -21,10 +21,10 @@ public class MesaData {
     }
 
     public void crearMesa(Mesa mesa) {
-        String sql = "INSERT INTO mesas (numero, capacidad, estado) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO mesa (id_mesa, capacidad, estado) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, mesa.getNumero());
+            ps.setInt(1, mesa.getIdMesa());
             ps.setInt(2, mesa.getCapacidad());
             ps.setString(3, mesa.getEstado());
             ps.executeUpdate();
@@ -35,12 +35,12 @@ public class MesaData {
     }
 
     public void modificarMesa(Mesa mesa) {
-        String sql = "UPDATE mesas SET capacidad = ?, estado = ? WHERE numero = ?";
+        String sql = "UPDATE mesa SET capacidad = ?, estado = ? WHERE id_mesa = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, mesa.getCapacidad());
             ps.setString(2, mesa.getEstado());
-            ps.setInt(3, mesa.getNumero());
+            ps.setInt(3, mesa.getIdMesa());
             ps.executeUpdate();
             System.out.println("Mesa modificada con éxito.");
         } catch (SQLException ex) {
@@ -49,14 +49,14 @@ public class MesaData {
     }
 
     public List<Mesa> listarMesasPorEstado(String estado) {
-        String sql = "SELECT * FROM mesas WHERE estado = ?";
+        String sql = "SELECT * FROM mesa WHERE estado = ?";
         List<Mesa> mesas = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, estado);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Mesa mesa = new Mesa(rs.getInt("numero"), rs.getInt("capacidad"), rs.getString("estado"));
+                Mesa mesa = new Mesa(rs.getInt("id_mesa"), rs.getInt("capacidad"), rs.getString("estado"));
                 mesas.add(mesa);
             }
         } catch (SQLException ex) {
@@ -66,7 +66,7 @@ public class MesaData {
     }
 
     public void cambiarEstadoMesa(int mesaId, String nuevoEstado) {
-        String sql = "UPDATE mesas SET estado = ? WHERE id = ?";
+        String sql = "UPDATE mesa SET estado = ? WHERE id_mesa = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, nuevoEstado);

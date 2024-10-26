@@ -28,7 +28,7 @@ public class ClienteData {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, cliente.getId());
             ps.setString(2, cliente.getNombre());
-            ps.setInt(3, cliente.getMesaAsignada().getNumero());
+            ps.setInt(3, cliente.getMesaAsignada().getIdMesa());
             ps.executeUpdate();
             System.out.println("Cliente agregado con éxito.");
         } catch (SQLException ex) {
@@ -55,7 +55,7 @@ public class ClienteData {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, cliente.getNombre());
-            ps.setInt(2, cliente.getMesaAsignada().getNumero());
+            ps.setInt(2, cliente.getMesaAsignada().getIdMesa());
             ps.setInt(3, cliente.getId());
             ps.executeUpdate();
             System.out.println("Cliente modificado con éxito.");
