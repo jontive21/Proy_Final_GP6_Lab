@@ -9,24 +9,26 @@ package Entidades;
  * @author Esquina del Vidrio
  */
 public class Producto {
-    private int codigo;
+    private int idProducto;
     private String nombre;
     private int cantidad;
     private double precio;
+    private String tipo;
 
-    public Producto(int codigo, String nombre, int cantidad, double precio) {
-        this.codigo = codigo;
+    public Producto(int idProducto, String nombre, int cantidad, double precio, String tipo) {
+        this.idProducto = idProducto;
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.precio = precio;
+        this.tipo= tipo;
     }
 
     public int getCodigo() {
-        return codigo;
+        return idProducto;
     }
 
     public void setCodigo(int codigo) {
-        this.codigo = codigo;
+        this.idProducto = codigo;
     }
 
     public String getNombre() {
@@ -52,4 +54,13 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
 }

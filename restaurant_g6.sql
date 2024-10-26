@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
+<<<<<<< Updated upstream
 -- Tiempo de generación: 25-10-2024 a las 03:18:23
+=======
+-- Tiempo de generación: 26-10-2024 a las 02:14:20
+>>>>>>> Stashed changes
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -33,6 +37,22 @@ CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `id_mesa` int(11) NOT NULL
+<<<<<<< Updated upstream
+=======
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detalle_producto`
+--
+
+CREATE TABLE `detalle_producto` (
+  `id_detalle_productos` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `monto` double NOT NULL
+>>>>>>> Stashed changes
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -81,6 +101,7 @@ INSERT INTO `mesero` (`id_mesero`, `nombre`, `dni`) VALUES
 
 CREATE TABLE `pedido` (
   `id_pedido` int(11) NOT NULL,
+  `id_detalle_productos` int(11) NOT NULL,
   `id_mesa` int(11) DEFAULT NULL,
   `id_mesero` int(11) DEFAULT NULL,
   `id_cliente` int(11) NOT NULL,
@@ -131,6 +152,16 @@ INSERT INTO `producto` (`id_producto`, `nombre`, `cantidad`, `precio`, `tipo_pro
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id_cliente`),
   ADD UNIQUE KEY `mesa asignada` (`id_mesa`);
+<<<<<<< Updated upstream
+=======
+
+--
+-- Indices de la tabla `detalle_producto`
+--
+ALTER TABLE `detalle_producto`
+  ADD PRIMARY KEY (`id_detalle_productos`),
+  ADD KEY `id_producto` (`id_producto`);
+>>>>>>> Stashed changes
 
 --
 -- Indices de la tabla `mesa`
@@ -152,7 +183,8 @@ ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id_pedido`),
   ADD UNIQUE KEY `id_cliente` (`id_cliente`),
   ADD KEY `id_mesa` (`id_mesa`),
-  ADD KEY `id_mesero` (`id_mesero`);
+  ADD KEY `id_mesero` (`id_mesero`),
+  ADD KEY `id_detalle_productos` (`id_detalle_productos`);
 
 --
 -- Indices de la tabla `producto`
@@ -169,6 +201,15 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `cliente`
   MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+<<<<<<< Updated upstream
+=======
+
+--
+-- AUTO_INCREMENT de la tabla `detalle_producto`
+--
+ALTER TABLE `detalle_producto`
+  MODIFY `id_detalle_productos` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT de la tabla `mesa`
@@ -203,6 +244,15 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `cliente`
   ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id_mesa`);
+<<<<<<< Updated upstream
+=======
+
+--
+-- Filtros para la tabla `detalle_producto`
+--
+ALTER TABLE `detalle_producto`
+  ADD CONSTRAINT `detalle_producto_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
+>>>>>>> Stashed changes
 
 --
 -- Filtros para la tabla `pedido`
@@ -210,7 +260,12 @@ ALTER TABLE `cliente`
 ALTER TABLE `pedido`
   ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id_mesa`),
   ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`id_mesero`) REFERENCES `mesero` (`id_mesero`),
+<<<<<<< Updated upstream
   ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
+=======
+  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
+  ADD CONSTRAINT `pedido_ibfk_4` FOREIGN KEY (`id_detalle_productos`) REFERENCES `detalle_producto` (`id_detalle_productos`);
+>>>>>>> Stashed changes
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
