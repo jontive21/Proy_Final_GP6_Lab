@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Entidades">
+  <ClassDiagramComponents>
+    <Class name="Cliente" package="Entidades" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="mesaAsignada" type="Mesa" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="Mesa" name="mesaAsignada"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getMesaAsignada" returnType="Mesa" visibility="public"/>
+        <Method name="setMesaAsignada" returnType="void" visibility="public">
+          <Argument type="Mesa" name="mesaAsignada"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Conexion" package="Entidades" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="URL" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="USUARIO" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="PASSWORD" type="String" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="conexion" type="Connection" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
+        <Method name="getConexion" returnType="Connection" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="DetalleProducto" package="Entidades" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="idDetalleProducto" type="int" visibility="private"/>
+        <Field name="producto" type="Producto" visibility="private"/>
+        <Field name="cantidad" type="int" visibility="private"/>
+        <Field name="monto" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idDetalleProducto"/>
+          <Argument type="Producto" name="producto"/>
+          <Argument type="int" name="cantidad"/>
+          <Argument type="double" name="monto"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdDetalleProducto" returnType="int" visibility="public"/>
+        <Method name="setIdDetalleProducto" returnType="void" visibility="public">
+          <Argument type="int" name="idDetalleProducto"/>
+        </Method>
+        <Method name="getProducto" returnType="Producto" visibility="public"/>
+        <Method name="setProducto" returnType="void" visibility="public">
+          <Argument type="Producto" name="producto"/>
+        </Method>
+        <Method name="getCantidad" returnType="int" visibility="public"/>
+        <Method name="setCantidad" returnType="void" visibility="public">
+          <Argument type="int" name="cantidad"/>
+        </Method>
+        <Method name="getMonto" returnType="double" visibility="public"/>
+        <Method name="setMonto" returnType="void" visibility="public">
+          <Argument type="double" name="monto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Mesa" package="Entidades" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="idMesa" type="int" visibility="private"/>
+        <Field name="capacidad" type="int" visibility="private"/>
+        <Field name="estado" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idMesa"/>
+          <Argument type="int" name="capacidad"/>
+          <Argument type="String" name="estado"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getIdMesa" returnType="int" visibility="public"/>
+        <Method name="setIdMesa" returnType="void" visibility="public">
+          <Argument type="int" name="idMesa"/>
+        </Method>
+        <Method name="getCapacidad" returnType="int" visibility="public"/>
+        <Method name="setCapacidad" returnType="void" visibility="public">
+          <Argument type="int" name="capacidad"/>
+        </Method>
+        <Method name="getEstado" returnType="String" visibility="public"/>
+        <Method name="setEstado" returnType="void" visibility="public">
+          <Argument type="String" name="estado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Mesero" package="Entidades" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="dni" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="dni"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getDni" returnType="String" visibility="public"/>
+        <Method name="setDni" returnType="void" visibility="public">
+          <Argument type="String" name="dni"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Pedido" package="Entidades" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="cliente" type="Cliente" visibility="private"/>
+        <Field name="mesero" type="Mesero" visibility="private"/>
+        <Field name="mesa" type="Mesa" visibility="private"/>
+        <Field name="productos" type="List&lt;Producto&gt;" visibility="private"/>
+        <Field name="monto" type="double" visibility="private"/>
+        <Field name="pagado" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="Cliente" name="cliente"/>
+          <Argument type="Mesero" name="mesero"/>
+          <Argument type="Mesa" name="mesa"/>
+          <Argument type="List&lt;Producto&gt;" name="productos"/>
+          <Argument type="double" name="monto"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getCliente" returnType="Cliente" visibility="public"/>
+        <Method name="setCliente" returnType="void" visibility="public">
+          <Argument type="Cliente" name="cliente"/>
+        </Method>
+        <Method name="getMesero" returnType="Mesero" visibility="public"/>
+        <Method name="setMesero" returnType="void" visibility="public">
+          <Argument type="Mesero" name="mesero"/>
+        </Method>
+        <Method name="getMesa" returnType="Mesa" visibility="public"/>
+        <Method name="setMesa" returnType="void" visibility="public">
+          <Argument type="Mesa" name="mesa"/>
+        </Method>
+        <Method name="getProductos" returnType="List&lt;Producto&gt;" visibility="public"/>
+        <Method name="setProductos" returnType="void" visibility="public">
+          <Argument type="List&lt;Producto&gt;" name="productos"/>
+        </Method>
+        <Method name="getMonto" returnType="double" visibility="public"/>
+        <Method name="setMonto" returnType="void" visibility="public">
+          <Argument type="double" name="monto"/>
+        </Method>
+        <Method name="isPagado" returnType="boolean" visibility="public"/>
+        <Method name="setPagado" returnType="void" visibility="public">
+          <Argument type="boolean" name="pagado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Producto" package="Entidades" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="idProducto" type="int" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="cantidad" type="int" visibility="private"/>
+        <Field name="precio" type="double" visibility="private"/>
+        <Field name="tipo" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="idProducto"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="int" name="cantidad"/>
+          <Argument type="double" name="precio"/>
+          <Argument type="String" name="tipo"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCodigo" returnType="int" visibility="public"/>
+        <Method name="setCodigo" returnType="void" visibility="public">
+          <Argument type="int" name="codigo"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="getCantidad" returnType="int" visibility="public"/>
+        <Method name="setCantidad" returnType="void" visibility="public">
+          <Argument type="int" name="cantidad"/>
+        </Method>
+        <Method name="getPrecio" returnType="double" visibility="public"/>
+        <Method name="setPrecio" returnType="void" visibility="public">
+          <Argument type="double" name="precio"/>
+        </Method>
+        <Method name="getTipo" returnType="String" visibility="public"/>
+        <Method name="setTipo" returnType="void" visibility="public">
+          <Argument type="String" name="tipo"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="Entidades.Pedido" target="Entidades.Producto" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Entidades.Cliente" target="Entidades.Mesa" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Entidades.Pedido" target="Entidades.Mesa" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="mesero" source="Entidades.Pedido" target="Entidades.Mesero" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="productos" source="Entidades.Pedido" target="Entidades.Producto" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Producto&gt;"/>
+    <HasRelation name="mesaAsignada" source="Entidades.Cliente" target="Entidades.Mesa" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Entidades.DetalleProducto" target="Entidades.Producto" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="mesa" source="Entidades.Pedido" target="Entidades.Mesa" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cliente" source="Entidades.Pedido" target="Entidades.Cliente" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Entidades.Pedido" target="Entidades.Cliente" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="Entidades.Pedido" target="Entidades.Mesero" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="producto" source="Entidades.DetalleProducto" target="Entidades.Producto" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
