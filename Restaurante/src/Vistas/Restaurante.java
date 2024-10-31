@@ -5,7 +5,9 @@
 package Vistas;
 
 import Entidades.Mesa;
+import Entidades.Producto;
 import Persistencia.MesaData;
+import Persistencia.ProductoData;
 
 
 /**
@@ -24,6 +26,11 @@ public class Restaurante {
     mesa1.crearMesa(mesa);
     mesa1.listarMesasPorEstado("Ocupada");
     mesa1.cambiarEstadoMesa(1, "libre");
+    
+    
+    Producto prod = new Producto(12, "pizaaaa",10,500,"comida");
+    ProductoData prodData = new ProductoData();
+    prodData.agregarProducto(prod);
     }
     
 }

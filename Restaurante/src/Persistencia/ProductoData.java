@@ -8,7 +8,11 @@ import Entidades.Conexion;
 import Entidades.Producto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 
 public class ProductoData {
@@ -18,32 +22,90 @@ public class ProductoData {
         con = Conexion.getConexion();
     }
 
-    public void agregarProductoAPedido(int pedidoId, Producto producto) {
-        String sql = "INSERT INTO pedidos_productos (pedido_id, producto_id, cantidad) VALUES (?, ?, ?)";
+    public void agregarProducto(Producto producto) {
+        String sql = "INSERT INTO producto (id_producto, nombre, cantidad,precio,tipo_producto) VALUES (?, ?, ?, ?, ?)";
+        String error="";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, pedidoId);
-            ps.setInt(2, producto.getCodigo());
+            ps.setInt(1, producto.getIdProducto());
+            ps.setString(2, producto.getNombre());
             ps.setInt(3, producto.getCantidad());
+            ps.setDouble(4, producto.getPrecio());
+            ps.setString(5, producto.getTipo());
+            
             ps.executeUpdate();
-            System.out.println("Producto agregado al pedido.");
+           JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
         } catch (SQLException ex) {
-            System.out.println("Error al agregar producto: " + ex.getMessage());
+             if ("23000".equals(ex.getSQLState())) {
+              error="No puede agregar un producto con el mismo id";
+            }else{
+                 error="Error al agregar producto:";
+                 
+             }
+            
+             JOptionPane.showMessageDialog(null, error+ ex.getMessage());
+            
         }
     }
 
-    public void quitarProductoDePedido(int pedidoId, int productoId) {
-        String sql = "DELETE FROM pedidos_productos WHERE pedido_id = ? AND producto_id = ?";
+    public void eliminarProducto(int idprod){
+        String sql="UPDATE producto SET cantidad = 0 WHERE id_producto=? ";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, pedidoId);
-            ps.setInt(2, productoId);
+            ps.setInt(1,idprod );
             ps.executeUpdate();
-            System.out.println("Producto eliminado del pedido.");
-        } catch (SQLException ex) {
-            System.out.println("Error al quitar producto: " + ex.getMessage());
+            System.out.println("Se hizo");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto");
         }
+    
     }
+        
+    public List <Producto> listarProductos(){
+        List <Producto> productos  = new ArrayList<>();
+            String sql= "SELECT * FROM producto WHERE cantidad > 0";
+            try{
+                PreparedStatement ps= con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                Producto producto = new Producto(rs.getInt("id_producto"), rs.getString("nombre"),rs.getInt("cantidad"), rs.getDouble("precio"),rs.getString("tipo_producto") );
+                productos.add(producto);
+                }
+                rs.close();
+            }catch(SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Error al listar productos"  );
+                
+            }
+
+        
+        return productos;
+    }
+    
+    
+       public List <Producto> listarProductosSinStock(){
+        List <Producto> productos  = new ArrayList<>();
+            String sql= "SELECT * FROM producto WHERE cantidad = 0";
+            try{
+                PreparedStatement ps= con.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                Producto producto = new Producto(rs.getInt("id_producto"), rs.getString("nombre"),rs.getInt("cantidad"), rs.getDouble("precio"),rs.getString("tipo_producto") );
+                productos.add(producto);
+                }
+                rs.close();
+            }catch(SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Error al listar productos sin stock"  );
+                
+            }
+
+        
+        return productos;
+    }
+    
+    
+    
+    
+    
 
     public double calcularSubtotal(Producto producto) {
         return producto.getPrecio() * producto.getCantidad();
