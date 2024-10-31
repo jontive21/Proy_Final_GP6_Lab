@@ -23,12 +23,12 @@ public class Producto {
         this.tipo= tipo;
     }
 
-    public int getCodigo() {
+    public int getIdProducto() {
         return idProducto;
     }
 
-    public void setCodigo(int codigo) {
-        this.idProducto = codigo;
+    public void setIdProducto(int idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getNombre() {
@@ -62,5 +62,7 @@ public class Producto {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+
+ 
 
 }
