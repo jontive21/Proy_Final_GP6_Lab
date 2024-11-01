@@ -28,9 +28,13 @@ public class Restaurante {
     mesa1.cambiarEstadoMesa(1, "libre");
     
     
-    Producto prod = new Producto(12, "pizaaaa",10,500,"comida");
+    Producto prod = new Producto(12, "pizaaaa",10,500,"bebida");
     ProductoData prodData = new ProductoData();
-    prodData.agregarProducto(prod);
+  
+    prodData.editarProducto(12, prod);
+    
+    
+    
     }
     
 }

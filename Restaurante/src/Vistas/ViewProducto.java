@@ -66,6 +66,7 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         jtfTipo = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        btnDeseleccionar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(704, 621));
 
@@ -218,6 +219,13 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             }
         });
 
+        btnDeseleccionar.setText("Salir modo edit");
+        btnDeseleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeseleccionarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -226,26 +234,32 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(141, 141, 141)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
+                                .addGap(511, 511, 511)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnDeseleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(87, 87, 87))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(58, 58, 58)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel6)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-
-                                .addGap(40, 40, 40)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(58, 58, 58)
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel6))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
+                                .addGap(41, 41, 41)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtfId, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                                     .addComponent(jtfNombre)
@@ -253,15 +267,11 @@ public class ViewProducto extends javax.swing.JInternalFrame {
                                     .addComponent(jtfPrecio)
                                     .addComponent(jtfTipo)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(69, 97, Short.MAX_VALUE))
-
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(191, 191, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,19 +281,17 @@ public class ViewProducto extends javax.swing.JInternalFrame {
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                        .addGap(1, 1, 1)
+                        .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
@@ -300,13 +308,17 @@ public class ViewProducto extends javax.swing.JInternalFrame {
                                 .addComponent(jtfPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jtfTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(91, 91, 91)
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(196, Short.MAX_VALUE))
-
+                            .addComponent(btnDeseleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -317,20 +329,20 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
-
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-       try{
+        System.out.println("corrio");
+        try{
         int rowSelected = jTable2.getSelectedRow();
         int id = (int) modelo.getValueAt(rowSelected, 0);
+           System.out.println(id);
         prodData.eliminarProducto(id);
         JOptionPane.showMessageDialog(this, "Producto eliminado de los disponibles");
        } catch(Exception e){
@@ -375,7 +387,54 @@ public class ViewProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
     }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+       
+          int rowSelected = jTable2.getSelectedRow();
+        if (rowSelected==-1) {
+            
+        }else{
+            try{
+        int id =  Integer.parseInt(modelo.getValueAt(rowSelected, 0).toString());
+        
+        String nombre = jtfNombre.getText();
+        int stock = Integer.parseInt(jtfStock.getText());
+        double precio= Double.parseDouble(jtfPrecio.getText());
+        String tipo = jtfTipo.getText();
+        Producto prod= new Producto(id,nombre,stock,precio,tipo);
+        
+                System.out.println(id);
+                System.out.println(nombre);
+                System.out.println(stock);
+                System.out.println(precio);
+                System.out.println(tipo);
+         prodData.editarProducto(id, prod);
+        
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Datos Ingresados incorrectamente");
+            
+            }finally{
+                if (jComboBox1.getSelectedIndex()==0) {
+            borrarFilasTabla();
+            mostrarFilas();
+          }else if(jComboBox1.getSelectedIndex()==1){
+           
+            borrarFilasTabla();
+            mostrarFilasSinStock();
+        }
+  
+            
+            jtfId.setEditable(true);
+            btnBorrar.setEnabled(false);
+            btnModificar.setEnabled(false);
+                jtfId.setText("");
+                jtfNombre.setText("");
+                jtfStock.setText("");
+                jtfPrecio.setText("");
+                jtfTipo.setText("");
+            }
+        
+        }
+        
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -396,8 +455,22 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "seleccione una fila");   
 
         }else{
+            Object idObject = modelo.getValueAt(rowSelected, 0);
+          
+           Object nombre = modelo.getValueAt(rowSelected, 1);
+           Object stock = modelo.getValueAt(rowSelected, 2);
+           Object precio= modelo.getValueAt(rowSelected, 3);
+           Object tipo = modelo.getValueAt(rowSelected, 4);
+//
+            jtfId.setText(idObject.toString());
+            jtfNombre.setText(nombre.toString());
+            jtfStock.setText(stock.toString());
+            jtfPrecio.setText(precio.toString());
+            jtfTipo.setText(tipo.toString());
+            
             jtfId.setEditable(false);
             btnBorrar.setEnabled(true);
+            btnModificar.setEnabled(true);
             
         }
         
@@ -407,9 +480,9 @@ public class ViewProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTable2FocusGained
 
     private void jTable2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable2FocusLost
-          jtfId.setEditable(true);
-            btnBorrar.setEnabled(false);
-            btnModificar.setEnabled(false);
+          jtfId.setEditable(false);
+            
+            
         
     }//GEN-LAST:event_jTable2FocusLost
 
@@ -417,11 +490,21 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         if (jComboBox1.getSelectedIndex()==0) {
             borrarFilasTabla();
             mostrarFilas();
-        }else{
+        }else if(jComboBox1.getSelectedIndex()==1){
+           
             borrarFilasTabla();
             mostrarFilasSinStock();
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void btnDeseleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeseleccionarActionPerformed
+       String comb= jComboBox1.getItemAt(0);
+        System.out.println(comb);
+        jComboBox1.setSelectedItem(comb);
+         jtfId.setEditable(true);
+        btnBorrar.setEnabled(false);
+        btnModificar.setEnabled(false);
+    }//GEN-LAST:event_btnDeseleccionarActionPerformed
 
     public void mostrarFilasSinStock(){
         List<Producto> listaProd= new ArrayList<>();
@@ -431,8 +514,6 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             Object [] newRow={p.getIdProducto(),p.getNombre(),p.getCantidad(),p.getPrecio(),p.getTipo()};
             modelo.addRow(newRow);
         }
-        
-    
     }
     
     
@@ -461,6 +542,7 @@ public class ViewProducto extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnDeseleccionar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;

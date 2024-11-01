@@ -60,6 +60,26 @@ public class ProductoData {
         }
     
     }
+    
+    public void editarProducto(int idprod,Producto producto){
+    String sql= "UPDATE producto  SET nombre = ? ,cantidad = ? ,precio = ?,  tipo_producto = ? WHERE id_producto = ?";
+    try{
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, producto.getNombre());
+        ps.setInt(2, producto.getCantidad());
+        ps.setDouble(3, producto.getPrecio());
+        ps.setString(4, producto.getTipo());
+        ps.setInt(5, idprod);
+        ps.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Producto editado correctamente");
+        
+    }catch(SQLException ex){
+        ex.printStackTrace();
+    }
+    
+    
+    }
+    
         
     public List <Producto> listarProductos(){
         List <Producto> productos  = new ArrayList<>();
@@ -92,7 +112,9 @@ public class ProductoData {
                 Producto producto = new Producto(rs.getInt("id_producto"), rs.getString("nombre"),rs.getInt("cantidad"), rs.getDouble("precio"),rs.getString("tipo_producto") );
                 productos.add(producto);
                 }
+                
                 rs.close();
+                
             }catch(SQLException e) {
                     JOptionPane.showMessageDialog(null, "Error al listar productos sin stock"  );
                 

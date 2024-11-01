@@ -55,6 +55,11 @@ public class ViewMesa extends javax.swing.JInternalFrame {
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(51, 0, 0));
         jButton2.setText("X");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -237,6 +242,10 @@ public class ViewMesa extends javax.swing.JInternalFrame {
     private void btnProductos5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProductos5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -34,7 +34,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btnProductos = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        btnMesa = new javax.swing.JButton();
+        btnMesas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -74,18 +74,18 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton3.setIconTextGap(12);
 
-        btnMesa.setBackground(new java.awt.Color(102, 0, 0));
-        btnMesa.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        btnMesa.setForeground(new java.awt.Color(255, 204, 153));
-        btnMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/restaurante-3_72.png"))); // NOI18N
-        btnMesa.setText("Mesas");
-        btnMesa.setToolTipText("");
-        btnMesa.setBorderPainted(false);
-        btnMesa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnMesa.setIconTextGap(12);
-        btnMesa.addActionListener(new java.awt.event.ActionListener() {
+        btnMesas.setBackground(new java.awt.Color(102, 0, 0));
+        btnMesas.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        btnMesas.setForeground(new java.awt.Color(255, 204, 153));
+        btnMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/restaurante-3_72.png"))); // NOI18N
+        btnMesas.setText("Mesas");
+        btnMesas.setToolTipText("");
+        btnMesas.setBorderPainted(false);
+        btnMesas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMesas.setIconTextGap(12);
+        btnMesas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMesaActionPerformed(evt);
+                btnMesasActionPerformed(evt);
             }
         });
 
@@ -121,10 +121,8 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(1049, Short.MAX_VALUE))
-
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -134,7 +132,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
-                .addComponent(btnMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(244, Short.MAX_VALUE))
@@ -177,10 +175,13 @@ public class ViewPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnProductosActionPerformed
 
-    private void btnMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesaActionPerformed
+    private void btnMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesasActionPerformed
         ViewMesa vm = new ViewMesa();
-        agregarInternalFrame(vm);
-    }//GEN-LAST:event_btnMesaActionPerformed
+       vm.setVisible(true);
+       vm.setSize(1000, 650);
+       escritorio.add(vm);
+       vm.moveToFront();
+    }//GEN-LAST:event_btnMesasActionPerformed
 
     
     private void agregarInternalFrame(JInternalFrame ifr) {
@@ -232,7 +233,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMesa;
+    private javax.swing.JButton btnMesas;
     private javax.swing.JButton btnProductos;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButton3;
