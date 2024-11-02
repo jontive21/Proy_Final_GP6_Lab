@@ -32,6 +32,7 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         String ids [] = { "ID","Nombre" , "Stock","Precio", "Tipo"};
         modelo.setColumnIdentifiers(ids);
         jTable2.setModel(modelo);
+        
         mostrarFilas();
         btnBorrar.setEnabled(false);
         btnModificar.setEnabled(false);
@@ -128,15 +129,21 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             }
         ));
         jTable2.setToolTipText("");
+        jTable2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable2.setRequestFocusEnabled(false);
+        jTable2.setShowGrid(true);
         jTable2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTable2FocusGained(evt);
-            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTable2FocusLost(evt);
             }
         });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
+        jTable2.getAccessibleContext().setAccessibleParent(jtfTipo);
 
         btnBorrar.setBackground(new java.awt.Color(102, 0, 0));
         btnBorrar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
@@ -318,7 +325,7 @@ public class ViewProducto extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnDeseleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -449,36 +456,6 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfStockActionPerformed
 
-    private void jTable2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable2FocusGained
-       int rowSelected = jTable2.getSelectedRow();
-        if (rowSelected == -1) {
-            JOptionPane.showMessageDialog(this, "seleccione una fila");   
-
-        }else{
-            Object idObject = modelo.getValueAt(rowSelected, 0);
-          
-           Object nombre = modelo.getValueAt(rowSelected, 1);
-           Object stock = modelo.getValueAt(rowSelected, 2);
-           Object precio= modelo.getValueAt(rowSelected, 3);
-           Object tipo = modelo.getValueAt(rowSelected, 4);
-//
-            jtfId.setText(idObject.toString());
-            jtfNombre.setText(nombre.toString());
-            jtfStock.setText(stock.toString());
-            jtfPrecio.setText(precio.toString());
-            jtfTipo.setText(tipo.toString());
-            
-            jtfId.setEditable(false);
-            btnBorrar.setEnabled(true);
-            btnModificar.setEnabled(true);
-            
-        }
-        
-        
-        
-        
-    }//GEN-LAST:event_jTable2FocusGained
-
     private void jTable2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable2FocusLost
           jtfId.setEditable(false);
             
@@ -499,12 +476,48 @@ public class ViewProducto extends javax.swing.JInternalFrame {
 
     private void btnDeseleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeseleccionarActionPerformed
        String comb= jComboBox1.getItemAt(0);
-        System.out.println(comb);
+       
+        jtfId.setText("");
+        jtfNombre.setText("");
+        jtfStock.setText("");
+        jtfPrecio.setText("");
+        jtfTipo.setText("");
         jComboBox1.setSelectedItem(comb);
          jtfId.setEditable(true);
         btnBorrar.setEnabled(false);
         btnModificar.setEnabled(false);
     }//GEN-LAST:event_btnDeseleccionarActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+            jTable2.requestFocus();
+            int rowSelected = jTable2.getSelectedRow();
+        if (rowSelected == -1) {
+            JOptionPane.showMessageDialog(this, "seleccione una fila");   
+           
+        }
+        
+        else{
+            Object idObject = modelo.getValueAt(rowSelected, 0);
+          
+           Object nombre = modelo.getValueAt(rowSelected, 1);
+           Object stock = modelo.getValueAt(rowSelected, 2);
+           Object precio= modelo.getValueAt(rowSelected, 3);
+           Object tipo = modelo.getValueAt(rowSelected, 4);
+//
+            jtfId.setText(idObject.toString());
+            jtfNombre.setText(nombre.toString());
+            jtfStock.setText(stock.toString());
+            jtfPrecio.setText(precio.toString());
+            jtfTipo.setText(tipo.toString());
+            
+            jtfId.setEditable(false);
+            btnBorrar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            
+        }
+        
+        
+    }//GEN-LAST:event_jTable2MouseClicked
 
     public void mostrarFilasSinStock(){
         List<Producto> listaProd= new ArrayList<>();
