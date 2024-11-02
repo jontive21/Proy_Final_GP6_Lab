@@ -20,13 +20,28 @@ public class MesaData {
         con = Conexion.getConexion();
     }
 
-    public void crearMesa(Mesa mesa) {
-        String sql = "INSERT INTO mesa (id_mesa, capacidad, estado) VALUES (?, ?, ?)";
+    public List <Mesa> listarMesas(){
+        List<Mesa> mesas = new ArrayList<>();
+        String sql = "SELECT * FROM mesa";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, mesa.getIdMesa());
-            ps.setInt(2, mesa.getCapacidad());
-            ps.setString(3, mesa.getEstado());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Mesa mesa = new Mesa(rs.getInt("id_mesa"), rs.getInt("capacidad"), rs.getString("estado"));
+                mesas.add(mesa);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Error al listar mesas: " + e.getMessage());
+        }
+        return mesas;
+    }
+    public void crearMesa(Mesa mesa) {
+        String sql = "INSERT INTO mesa (capacidad, estado) VALUES (?, ?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, mesa.getCapacidad());
+            ps.setString(2, mesa.getEstado());
             ps.executeUpdate();
             System.out.println("Mesa creada con éxito.");
         } catch (SQLException ex) {
@@ -75,6 +90,18 @@ public class MesaData {
             System.out.println("Estado de la mesa actualizado a: " + nuevoEstado);
         } catch (SQLException ex) {
             System.out.println("Error al cambiar el estado de la mesa: " + ex.getMessage());
+        }
+    }
+    
+    public void borrarMesa(int idMesa) {
+        String sql = "DELETE FROM mesa WHERE id_mesa = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idMesa);
+            ps.executeUpdate();
+            System.out.println("Mesa eliminada con éxito.");
+        } catch (SQLException ex) {
+            System.out.println("Error al eliminar mesa: " + ex.getMessage());
         }
     }
 }

@@ -4,6 +4,18 @@
  */
 package Vistas;
 
+import Entidades.Mesa;
+import Persistencia.MesaData;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ariel
@@ -15,6 +27,7 @@ public class ViewMesa extends javax.swing.JInternalFrame {
      */
     public ViewMesa() {
         initComponents();
+        cargarDatosMesa();
     }
 
     /**
@@ -26,6 +39,28 @@ public class ViewMesa extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        numMesaDialog = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        capDialog = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        estadoDialog = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jDialog2 = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        numMesaDialog2 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        capDialog2 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        estadoDialog2 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -37,6 +72,204 @@ public class ViewMesa extends javax.swing.JInternalFrame {
         btnProductos2 = new javax.swing.JButton();
         btnProductos4 = new javax.swing.JButton();
         btnProductos5 = new javax.swing.JButton();
+
+        jLabel1.setText("Ingrese los datos de la mesa a cargar:");
+
+        jLabel2.setText("Numero de mesa:");
+
+        numMesaDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numMesaDialogActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Capacidad:");
+
+        capDialog.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                capDialogActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Estado:");
+
+        jButton1.setText("Cargar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Cancelar");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(jButton1)
+                                .addGap(57, 57, 57)
+                                .addComponent(jButton3)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 70, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(estadoDialog)
+                                    .addComponent(numMesaDialog)
+                                    .addComponent(capDialog))
+                                .addGap(35, 35, 35)))))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numMesaDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(capDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(estadoDialog, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jLabel6.setText("Ingrese los datos de la mesa a modificar:");
+
+        jLabel7.setText("Numero de mesa:");
+
+        numMesaDialog2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numMesaDialog2ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("Capacidad:");
+
+        capDialog2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                capDialog2ActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("Estado:");
+
+        jButton4.setText("Modificar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Cancelar");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel9))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(86, 86, 86)
+                                .addComponent(jButton4)
+                                .addGap(57, 57, 57)
+                                .addComponent(jButton5)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(0, 49, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(estadoDialog2)
+                                    .addComponent(numMesaDialog2)
+                                    .addComponent(capDialog2))
+                                .addGap(35, 35, 35)))))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel6)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(numMesaDialog2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(capDialog2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(estadoDialog2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jDialog2Layout = new javax.swing.GroupLayout(jDialog2.getContentPane());
+        jDialog2.getContentPane().setLayout(jDialog2Layout);
+        jDialog2Layout.setHorizontalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jDialog2Layout.setVerticalGroup(
+            jDialog2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 0));
         jPanel1.setForeground(new java.awt.Color(102, 51, 0));
@@ -81,13 +314,10 @@ public class ViewMesa extends javax.swing.JInternalFrame {
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -137,7 +367,7 @@ public class ViewMesa extends javax.swing.JInternalFrame {
         btnProductos4.setBackground(new java.awt.Color(102, 0, 0));
         btnProductos4.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         btnProductos4.setForeground(new java.awt.Color(255, 204, 153));
-        btnProductos4.setText("Ordenar por");
+        btnProductos4.setText("Ver ocupadas");
         btnProductos4.setToolTipText("");
         btnProductos4.setBorderPainted(false);
         btnProductos4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -151,7 +381,7 @@ public class ViewMesa extends javax.swing.JInternalFrame {
         btnProductos5.setBackground(new java.awt.Color(102, 0, 0));
         btnProductos5.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         btnProductos5.setForeground(new java.awt.Color(255, 204, 153));
-        btnProductos5.setText("Buscar por");
+        btnProductos5.setText("Mostrar todas las mesas");
         btnProductos5.setToolTipText("");
         btnProductos5.setBorderPainted(false);
         btnProductos5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -224,29 +454,138 @@ public class ViewMesa extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos1ActionPerformed
-        // TODO add your handling code here:
+        int selectedRow = jTable2.getSelectedRow(); // Obtiene la fila seleccionada
+        if (selectedRow != -1) {
+            int idMesa = (int) jTable2.getValueAt(selectedRow, 0);
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                    "Estas seguro de que deseas eliminar la mesa con ID " + idMesa + "?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+
+                MesaData mesaData = new MesaData();
+                mesaData.borrarMesa(idMesa); 
+                cargarDatosMesa();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona una mesa para eliminar.");
+        }
     }//GEN-LAST:event_btnProductos1ActionPerformed
 
     private void btnProductos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos3ActionPerformed
-        // TODO add your handling code here:
+      jDialog1.pack();
+        jDialog1.setLocationRelativeTo(this); 
+      jDialog1.setVisible(true);  
     }//GEN-LAST:event_btnProductos3ActionPerformed
 
     private void btnProductos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos2ActionPerformed
-        // TODO add your handling code here:
+         int selectedRow = jTable2.getSelectedRow(); 
+
+        if (selectedRow != -1) {
+            int idMesa = (int) jTable2.getValueAt(selectedRow, 0);
+            int capacidad = (int) jTable2.getValueAt(selectedRow, 1); 
+            String estado = (String) jTable2.getValueAt(selectedRow, 2);
+
+            numMesaDialog2.setText(String.valueOf(idMesa));
+            capDialog2.setText(String.valueOf(capacidad)); 
+            estadoDialog.setText(estado);
+
+
+            jDialog2.pack();
+            jDialog2.setLocationRelativeTo(this);
+            jDialog2.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una mesa.");
+        }
     }//GEN-LAST:event_btnProductos2ActionPerformed
 
     private void btnProductos4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos4ActionPerformed
-        // TODO add your handling code here:
+        String estadoFiltro = "Ocupada";
+            MesaData mesaData = new MesaData();
+            List<Mesa> mesasFiltradas = mesaData.listarMesasPorEstado(estadoFiltro);
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("ID");
+            modelo.addColumn("Capacidad");
+            modelo.addColumn("Estado");
+
+            for (Mesa mesa : mesasFiltradas) {
+                modelo.addRow(new Object[]{mesa.getIdMesa(), mesa.getCapacidad(), mesa.getEstado()});
+            }
+            jTable2.setModel(modelo);
     }//GEN-LAST:event_btnProductos4ActionPerformed
 
     private void btnProductos5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos5ActionPerformed
-        // TODO add your handling code here:
+        cargarDatosMesa();
     }//GEN-LAST:event_btnProductos5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void capDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capDialogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_capDialogActionPerformed
+
+    private void numMesaDialogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numMesaDialogActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numMesaDialogActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int capMesa = Integer.parseInt(capDialog.getText());
+        String estado = estadoDialog.getText();
+        Mesa nuevaMesa = new Mesa(0, capMesa, estado);
+        MesaData mesaData = new MesaData();
+        mesaData.crearMesa(nuevaMesa);
+
+        cargarDatosMesa(); 
+        capDialog.setText("");
+        estadoDialog.setText("");
+        jDialog1.setVisible(false);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void numMesaDialog2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numMesaDialog2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numMesaDialog2ActionPerformed
+
+    private void capDialog2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_capDialog2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_capDialog2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int selectedRow = jTable2.getSelectedRow(); 
+            if (selectedRow != -1) {
+                int idMesa = (int) jTable2.getValueAt(selectedRow, 0);
+                int capMesa = Integer.parseInt(capDialog2.getText());
+                String estado = estadoDialog2.getText();
+
+                Mesa mesaModificada = new Mesa(idMesa, capMesa, estado);
+                MesaData mesaData = new MesaData();
+                mesaData.modificarMesa(mesaModificada);
+
+                cargarDatosMesa(); 
+                jDialog2.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona una mesa para modificar.");
+            }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void cargarDatosMesa() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("Capacidad");
+        modelo.addColumn("Estado");
+
+        MesaData mesaData = new MesaData();
+        List<Mesa> mesas = mesaData.listarMesas();
+
+        for (Mesa mesa : mesas) {
+            modelo.addRow(new Object[]{mesa.getIdMesa(), mesa.getCapacidad(), mesa.getEstado()});
+        }
+        jTable2.setModel(modelo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnProductos1;
@@ -254,11 +593,33 @@ public class ViewMesa extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnProductos3;
     private javax.swing.JButton btnProductos4;
     private javax.swing.JButton btnProductos5;
+    private javax.swing.JTextField capDialog;
+    private javax.swing.JTextField capDialog2;
+    private javax.swing.JTextField estadoDialog;
+    private javax.swing.JTextField estadoDialog2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog jDialog2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTextField numMesaDialog;
+    private javax.swing.JTextField numMesaDialog2;
     // End of variables declaration//GEN-END:variables
 }
