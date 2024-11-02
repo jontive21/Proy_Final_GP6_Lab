@@ -23,7 +23,7 @@ public class ClienteData {
 
     
     public void agregarCliente(Cliente cliente) {
-        String sql = "INSERT INTO clientes (id, nombre, mesa_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO cliente (id_cliente, nombre, id_mesa) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, cliente.getId());
@@ -38,7 +38,7 @@ public class ClienteData {
 
  
     public void eliminarCliente(int clienteId) {
-        String sql = "DELETE FROM clientes WHERE id = ?";
+        String sql = "DELETE FROM cliente WHERE id_cliente = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, clienteId);
@@ -51,7 +51,7 @@ public class ClienteData {
 
     // Método para modificar un cliente
     public void modificarCliente(Cliente cliente) {
-        String sql = "UPDATE clientes SET nombre = ?, mesa_id = ? WHERE id = ?";
+        String sql = "UPDATE cliente SET nombre = ?, mesa_id = ? WHERE id_cliente = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, cliente.getNombre());
@@ -66,15 +66,15 @@ public class ClienteData {
 
     // Método para buscar un cliente por ID
     public Cliente buscarClientePorId(int clienteId) {
-        String sql = "SELECT * FROM clientes WHERE id = ?";
+        String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
         Cliente cliente = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, clienteId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Mesa mesa = new Mesa(rs.getInt("mesa_id"), 0, "desconocido");
-                cliente = new Cliente(rs.getInt("id"), rs.getString("nombre"), mesa);
+                Mesa mesa = new Mesa(rs.getInt("id_mesa"), 0, "desconocido");
+                cliente = new Cliente(rs.getInt("id_cliente"), rs.getString("nombre"), mesa);
             }
         } catch (SQLException ex) {
             System.out.println("Error al buscar cliente: " + ex.getMessage());
@@ -83,14 +83,14 @@ public class ClienteData {
     }
 
     public List<Cliente> listarClientes() {
-        String sql = "SELECT * FROM clientes";
+        String sql = "SELECT * FROM cliente";
         List<Cliente> clientes = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Mesa mesa = new Mesa(rs.getInt("mesa_id"), 0, "desconocido");
-                Cliente cliente = new Cliente(rs.getInt("id"), rs.getString("nombre"), mesa);
+                Mesa mesa = new Mesa(rs.getInt("id_mesa"), 0, "desconocido");
+                Cliente cliente = new Cliente(rs.getInt("id_cliente"), rs.getString("nombre"), mesa);
                 clientes.add(cliente);
             }
         } catch (SQLException ex) {
@@ -99,7 +99,7 @@ public class ClienteData {
         return clientes;
     }
 
-    public void asignarMesa(Cliente cliente, Mesa mesa) {
+    public void reasignarMesa(Cliente cliente, Mesa mesa) {
         cliente.setMesaAsignada(mesa);
         modificarCliente(cliente);
         System.out.println("Mesa asignada al cliente " + cliente.getNombre() + ".");
