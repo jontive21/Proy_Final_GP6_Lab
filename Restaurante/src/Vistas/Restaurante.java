@@ -4,10 +4,12 @@
  */
 package Vistas;
 
-import Entidades.Cliente;
+
+import Entidades.DetalleProducto;
 import Entidades.Mesa;
 import Entidades.Producto;
-import Persistencia.ClienteData;
+import Persistencia.DetalleProductoData;
+
 import Persistencia.MesaData;
 import Persistencia.ProductoData;
 import java.util.ArrayList;
@@ -36,22 +38,16 @@ public class Restaurante {
 //    ProductoData prodData = new ProductoData();
 //  
 //    prodData.editarProducto(12, prod);
-//
-//    Cliente cliente1 = new Cliente(1,"jose",mesa);
-//    
-//    ClienteData cliente = new ClienteData();
-//    
-//   
-//    Cliente cliente2;
-////   cliente2=cliente.buscarClientePorId(1);
-//    List<Cliente> c = new ArrayList<>();
-//  c= cliente.listarClientes();
-//    
-//   
-//  for (Cliente tipo: c) {
-//            System.out.println(tipo.getId() + " | " + tipo.getNombre() );
-//        }
-//    
+
+    
+    
+//Producto producto = new Producto(1,"pizza fugazzeta", 15, 2300,"comida");
+//DetalleProducto detalle = new DetalleProducto(1, producto ,2, 4600);
+//Producto producto2 = new Producto(5,"taco de pollo", 25, 800,"comida");
+//DetalleProducto detalle1 = new DetalleProducto(5, producto2 ,2, 4000);
+//DetalleProductoData dpd = new DetalleProductoData();
+//dpd.buscarDetalleProducto(2);
+
 //    
     }
     
