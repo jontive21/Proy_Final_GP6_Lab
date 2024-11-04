@@ -4,12 +4,16 @@
  */
 package Vistas;
 
+
 import Entidades.DetalleProducto;
 import Entidades.Mesa;
 import Entidades.Producto;
 import Persistencia.DetalleProductoData;
+
 import Persistencia.MesaData;
 import Persistencia.ProductoData;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -34,6 +38,7 @@ public class Restaurante {
 //    ProductoData prodData = new ProductoData();
 //  
 //    prodData.editarProducto(12, prod);
+
     
     
 //Producto producto = new Producto(1,"pizza fugazzeta", 15, 2300,"comida");
@@ -42,6 +47,7 @@ public class Restaurante {
 //DetalleProducto detalle1 = new DetalleProducto(5, producto2 ,2, 4000);
 //DetalleProductoData dpd = new DetalleProductoData();
 //dpd.buscarDetalleProducto(2);
+
 //    
     }
     
