@@ -37,6 +37,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         btnMesas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        btnProductos1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -73,6 +74,11 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton3.setIconTextGap(12);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnMesas.setBackground(new java.awt.Color(102, 0, 0));
         btnMesas.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -112,6 +118,22 @@ public class ViewPrincipal extends javax.swing.JFrame {
             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
         );
 
+        btnProductos1.setBackground(new java.awt.Color(102, 0, 0));
+        btnProductos1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        btnProductos1.setForeground(new java.awt.Color(255, 204, 153));
+        btnProductos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/hamburguesa-72.png"))); // NOI18N
+        btnProductos1.setText("Facturacion");
+        btnProductos1.setToolTipText("");
+        btnProductos1.setBorderPainted(false);
+        btnProductos1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnProductos1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnProductos1.setIconTextGap(12);
+        btnProductos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductos1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -122,7 +144,9 @@ public class ViewPrincipal extends javax.swing.JFrame {
                     .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMesas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(1049, Short.MAX_VALUE))
+                .addGap(205, 205, 205)
+                .addComponent(btnProductos1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(617, 617, 617))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -130,7 +154,9 @@ public class ViewPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
-                .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(btnMesas, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
@@ -144,7 +170,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addGap(454, 454, 454)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,6 +211,22 @@ public class ViewPrincipal extends javax.swing.JFrame {
        escritorio.add(vm);
        vm.moveToFront();
     }//GEN-LAST:event_btnMesasActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        ViewClientes vc = new ViewClientes();
+        vc.setVisible(true);
+        vc.setSize(1000, 650);
+        escritorio.add(vc);
+        vc.moveToFront();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos1ActionPerformed
+        ViewDetalleProducto vdp = new ViewDetalleProducto();
+        vdp.setVisible(true);
+        vdp.setSize(1000,650);
+        escritorio.add(vdp);
+        vdp.moveToFront();
+    }//GEN-LAST:event_btnProductos1ActionPerformed
 
     
     private void agregarInternalFrame(JInternalFrame ifr) {
@@ -235,6 +280,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnMesas;
     private javax.swing.JButton btnProductos;
+    private javax.swing.JButton btnProductos1;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
