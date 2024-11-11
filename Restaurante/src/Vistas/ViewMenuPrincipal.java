@@ -5,13 +5,17 @@
 package Vistas;
 
 import Entidades.Mesa;
+import Persistencia.MesaData;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -24,12 +28,21 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private Mesa[] mesas = new Mesa[12]; // Máximo 12 mesas
     private JLabel[] mesaLabels = new JLabel[12]; // Máximo 12 JLabels
     private JLabel selectedLabel = null;
+    private MesaData md;
+    private List <Mesa> mesasList = new ArrayList<>();
+    private static int mesasAgregadas;
     /**
      * Creates new form ViewMenuPrincipal
      */
     public ViewMenuPrincipal() {
+        md= new MesaData();
+      mesasList=md.listarMesas();
+      mesasAgregadas=mesasList.size();
         initComponents();
         inicializarMesas();
+         traerMesasDB();
+        actualizarComboBoxMesas();
+        
     }
 
     /**
@@ -489,6 +502,10 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JbAñadirMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAñadirMesaActionPerformed
+       
+        mesasList=md.listarMesas();
+      mesasAgregadas=mesasList.size();
+        
         jDialog1.pack();
         jDialog1.setLocationRelativeTo(this);
         jDialog1.setVisible(true);
@@ -512,6 +529,9 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JbModificarMesaActionPerformed
 
     private void JbAEliminarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAEliminarMesaActionPerformed
+          
+            
+        
         if (selectedLabel == null) {
             JOptionPane.showMessageDialog(this, "No hay ninguna mesa seleccionada.");
             return;
@@ -520,6 +540,8 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         Mesa mesaSeleccionada = (Mesa) selectedLabel.getClientProperty("mesa");
 
         if (mesaSeleccionada != null) {
+            md.borrarMesa(mesaSeleccionada.getIdMesa());
+            System.out.println("entro al if y deberia haber eliminado la mesa");
             mesaSeleccionada.setEstado(null);
             URL imageURL = getClass().getResource("/img/Vacio.png");
             ImageIcon icono = new ImageIcon(imageURL);
@@ -529,6 +551,11 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "La mesa seleccionada no tiene datos.");
         }
+        mesasList=md.listarMesas();
+      mesasAgregadas=mesasList.size();
+        
+         actualizarComboBoxMesas();
+        
     }//GEN-LAST:event_JbAEliminarMesaActionPerformed
 
     private void btnProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos1ActionPerformed
@@ -536,21 +563,53 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnProductos1ActionPerformed
 
     private void JbAceptarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAceptarMesaActionPerformed
+       
+        
         int mesasAAgregar = cantidadMesasComboBox.getSelectedIndex() + 1;
         int capacidad = Integer.parseInt(JtCapacidadMesas.getText());
-        int mesasAgregadas = 0;
+        int mesasagregadasindice=0;
+        
+        for (int i = 0; i < mesaLabels.length; i++) {
+            JLabel mesaLabel = mesaLabels[i];
+                if (mesaLabel.getClientProperty("mesa") !=null) {
+                    mesasagregadasindice++;
+                }
+                System.out.println(mesasagregadasindice);
+        }
+        mesasagregadasindice = mesasagregadasindice+mesasAAgregar ;
+        //test consola
+         System.out.println(mesasAAgregar);
+         System.out.println(mesasAgregadas);
+         System.out.println("hasta donde deberia llegar es hasta "+  mesasagregadasindice);
+         
         URL imageURL = getClass().getResource("/img/Libre.png");
-
-        for (int i = 0; i < mesaLabels.length && mesasAgregadas < mesasAAgregar; i++) {
+        
+            
+            
+        int indice=0;    
+            
+        for (int i = 0; i < mesaLabels.length && mesasAAgregar > 0; i++) {
+            
+            System.out.println("entro al for");
             JLabel mesaLabel = mesaLabels[i];
             ImageIcon icono = new ImageIcon(imageURL);
-
-            if (mesaLabel.getClientProperty("mesa") == null) {
+            
+            
+                
+            
+            if (mesaLabel.getClientProperty("mesa") == null && indice <mesasagregadasindice) {
+                try{
+                    System.out.println("entrando al try");
                 Mesa nuevaMesa = new Mesa(i + 1, capacidad, "libre");
+                md.crearMesa(nuevaMesa);
                 mesaLabel.setIcon(icono);
                 mesaLabel.putClientProperty("mesa", nuevaMesa);
                 mesaLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+                }catch(Exception e){
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al agregar la mesa");
+                }
+                    
             mesaLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
@@ -571,11 +630,18 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
                 }
 
             });
-                mesasAgregadas++;
+                
             }
+            
+            indice++;
         }
-
+           
+        System.out.println("salio del for");
+        mesasList=md.listarMesas();
+      mesasAgregadas=mesasList.size();
+        
         actualizarComboBoxMesas();
+        jDialog1.dispose();
     }//GEN-LAST:event_JbAceptarMesaActionPerformed
 
     private void cantidadMesasComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadMesasComboBoxActionPerformed
@@ -592,7 +658,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
 
         // Obtener la nueva capacidad de la mesa desde el JTextField
         String capacidadTexto = JtModificarCapMesas.getText(); // JtModificarCapMesas es tu JTextField para capacidad
-
+   
         // Verificar que la capacidad sea un número válido
         int nuevaCapacidad = 0;
         try {
@@ -608,8 +674,10 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         if (mesaSeleccionada != null) {
             mesaSeleccionada.setCapacidad(nuevaCapacidad);
             mesaSeleccionada.setEstado(estadoSeleccionado); 
+            md.modificarMesa(mesaSeleccionada);
         }
-
+        
+      
         jDialog2.dispose();
 
         JOptionPane.showMessageDialog(this, "La mesa se modificó con éxito.");
@@ -624,12 +692,14 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JtModificarCapMesasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+
         ViewProducto vp = new ViewProducto();  
         vp.setSize(1000, 650);       
         escritorio.setLayout(null);
         escritorio.add(vp);  
         vp.setVisible(true);  
         vp.moveToFront();     
+
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -673,26 +743,65 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
        mesaLabels[11] = JlblMesa12;
     }
     
+    private void traerMesasDB(){
+            int i=0;
+        for (Mesa m:mesasList) {
+            URL imageURL= getClass().getResource("/img/"+m.getEstado().toLowerCase()+".png");
+          ImageIcon icono = new ImageIcon(imageURL);
+             JLabel mesaLabel = mesaLabels[i];
+                mesaLabel.setIcon(icono);
+                mesaLabel.putClientProperty("mesa", m);
+                mesaLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                i++;
+                
+                    mesaLabel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    // Cambiar el cursor cuando se pasa sobre el JLabel
+                    mesaLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (selectedLabel != null) {
+                        selectedLabel.setBorder(null);
+                    }
+
+                    mesaLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
+
+                    selectedLabel = mesaLabel;
+                    modificarLabelMesaSeleccionada();
+                }
+
+            });
+                
+        }
+       
+    
+    
+    }
+    
+    //da el numero de mesas que aun se pueden agregar
     private void actualizarComboBoxMesas() {
-        int mesasActuales = contarMesas();
+        
         int maxMesas = 12;
 
         cantidadMesasComboBox.removeAllItems();
 
-        for (int i = 1; i <= maxMesas - mesasActuales; i++) {
+        for (int i = 1; i <= maxMesas - mesasAgregadas; i++) {
             cantidadMesasComboBox.addItem(i + " Mesas");
         }
     }
 
-    private int contarMesas() {
-        int contador = 0;
-        for (JLabel mesaLabel : mesaLabels) {
-            if (mesaLabel.getClientProperty("mesa") != null) {
-                contador++;
-            }
-        }
-        return contador;
-    }
+//    private int contarMesas() {
+//        int contador = 0;
+//        for (JLabel mesaLabel : mesaLabels) {
+//            if (mesaLabel.getClientProperty("mesa") != null) {
+//                contador++;
+//            }
+//        }
+//        return contador;
+//    }
     
     private void actualizarImagenMesa(JLabel mesaLabel, String estado) {
         URL imageURL;
@@ -700,16 +809,16 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
 
         switch (estado.toLowerCase()) {
             case "libre":
-                imageURL = getClass().getResource("/img/Libre.png");
+                imageURL = getClass().getResource("/img/libre.png");
                 break;
             case "ocupada":
-                imageURL = getClass().getResource("/img/Ocupada.png");
+                imageURL = getClass().getResource("/img/ocupada.png");
                 break;
             case "atendida":
-                imageURL = getClass().getResource("/img/Atendida.png");
+                imageURL = getClass().getResource("/img/atendida.png");
                 break;
             case "reservada":
-                imageURL = getClass().getResource("/img/Reservada.png");
+                imageURL = getClass().getResource("/img/reservada.png");
                 break;
             default:
                 System.out.println("Estado no reconocido: " + estado);

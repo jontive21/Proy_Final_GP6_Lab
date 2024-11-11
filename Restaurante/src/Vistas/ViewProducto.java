@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ViewProducto extends javax.swing.JInternalFrame {
     public ViewProducto() {
+        
         initComponents();
         cargarProductosEnTabla();
     }
@@ -52,7 +53,9 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         jtfPrecio = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+
         setPreferredSize(new java.awt.Dimension(1024, 690));
+
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(null));
@@ -110,6 +113,8 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(jTable2);
+
+
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 970, 335));
 
