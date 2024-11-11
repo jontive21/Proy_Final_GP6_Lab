@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class MesaData {
     private Connection con;
@@ -37,13 +38,15 @@ public class MesaData {
         return mesas;
     }
     public void crearMesa(Mesa mesa) {
-        String sql = "INSERT INTO mesa (capacidad, estado) VALUES (?, ?)";
+        String sql = "INSERT INTO mesa (id_mesa, capacidad, estado) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, mesa.getCapacidad());
-            ps.setString(2, mesa.getEstado());
+            ps.setInt(1, mesa.getIdMesa());
+            ps.setInt(2, mesa.getCapacidad());
+            ps.setString(3, mesa.getEstado());
             ps.executeUpdate();
             System.out.println("Mesa creada con éxito.");
+            JOptionPane.showMessageDialog(null, "Mesa creada correctamente");
         } catch (SQLException ex) {
             System.out.println("Error al crear mesa: " + ex.getMessage());
         }

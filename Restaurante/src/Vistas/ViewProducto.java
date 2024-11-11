@@ -27,6 +27,7 @@ public class ViewProducto extends javax.swing.JInternalFrame {
       };
     
     public ViewProducto() {
+        
         initComponents();
         prodData = new ProductoData();
         String ids [] = { "ID","Nombre" , "Stock","Precio", "Tipo"};
@@ -69,7 +70,7 @@ public class ViewProducto extends javax.swing.JInternalFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
         btnDeseleccionar = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(704, 621));
+        setPreferredSize(new java.awt.Dimension(704, 1000));
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -143,7 +144,6 @@ public class ViewProducto extends javax.swing.JInternalFrame {
             }
         });
         jScrollPane2.setViewportView(jTable2);
-        jTable2.getAccessibleContext().setAccessibleParent(jtfTipo);
 
         btnBorrar.setBackground(new java.awt.Color(102, 0, 0));
         btnBorrar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
