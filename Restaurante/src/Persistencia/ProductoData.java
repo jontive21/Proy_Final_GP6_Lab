@@ -23,28 +23,32 @@ public class ProductoData {
     }
 
     public void agregarProducto(Producto producto) {
-        String sql = "INSERT INTO producto (id_producto, nombre, cantidad,precio,tipo_producto) VALUES (?, ?, ?, ?, ?)";
-        String error="";
+        String sql = "INSERT INTO producto (nombre, cantidad, precio, tipo_producto) VALUES (?, ?, ?, ?)";
+        String error = "";
+
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, producto.getIdProducto());
-            ps.setString(2, producto.getNombre());
-            ps.setInt(3, producto.getCantidad());
-            ps.setDouble(4, producto.getPrecio());
-            ps.setString(5, producto.getTipo());
-            
+            PreparedStatement ps = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            ps.setString(1, producto.getNombre());
+            ps.setInt(2, producto.getCantidad());
+            ps.setDouble(3, producto.getPrecio());
+            ps.setString(4, producto.getTipo());
+
             ps.executeUpdate();
-           JOptionPane.showMessageDialog(null, "Producto agregado correctamente");
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                producto.setIdProducto(rs.getInt(1));  // Establece el ID autogenerado en el objeto Producto
+            }
+            rs.close();
+
+            JOptionPane.showMessageDialog(null, "Producto agregado correctamente con ID: " + producto.getIdProducto());
         } catch (SQLException ex) {
-             if ("23000".equals(ex.getSQLState())) {
-              error="No puede agregar un producto con el mismo id";
-            }else{
-                 error="Error al agregar producto:";
-                 
-             }
-            
-             JOptionPane.showMessageDialog(null, error+ ex.getMessage());
-            
+            if ("23000".equals(ex.getSQLState())) {
+                error = "No puede agregar un producto con el mismo id";
+            } else {
+                error = "Error al agregar producto:";
+            }
+            JOptionPane.showMessageDialog(null, error + ex.getMessage());
         }
     }
 
@@ -71,7 +75,6 @@ public class ProductoData {
         ps.setString(4, producto.getTipo());
         ps.setInt(5, idprod);
         ps.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Producto editado correctamente");
         
     }catch(SQLException ex){
         ex.printStackTrace();
