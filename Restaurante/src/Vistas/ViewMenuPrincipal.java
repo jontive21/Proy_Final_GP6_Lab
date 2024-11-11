@@ -60,6 +60,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         JCEstadoDeMesa = new javax.swing.JComboBox<>();
         JbAceptarModificarMesa = new javax.swing.JButton();
         JbCancelarModificarMesa = new javax.swing.JButton();
+        escritorio = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
@@ -170,8 +171,6 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jDialog2.setPreferredSize(new java.awt.Dimension(580, 420));
-
         jPanel3.setBackground(new java.awt.Color(51, 0, 0));
         jPanel3.setPreferredSize(new java.awt.Dimension(580, 420));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -263,6 +262,8 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         );
 
         setPreferredSize(new java.awt.Dimension(1320, 680));
+
+        escritorio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 0));
         jPanel1.setForeground(new java.awt.Color(51, 0, 0));
@@ -471,18 +472,17 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnProductos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
+        escritorio.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1310, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1308, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
         );
 
         pack();
@@ -624,7 +624,12 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JtModificarCapMesasActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
-        
+        ViewProducto vp = new ViewProducto();  
+        vp.setSize(1000, 650);       
+        escritorio.setLayout(null);
+        escritorio.add(vp);  
+        vp.setVisible(true);  
+        vp.moveToFront();     
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -750,6 +755,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnProductos1;
     private javax.swing.JButton btnProductos2;
     private javax.swing.JComboBox<String> cantidadMesasComboBox;
+    private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButton3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
