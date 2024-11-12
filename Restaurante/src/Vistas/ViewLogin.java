@@ -63,6 +63,7 @@ public class ViewLogin extends javax.swing.JFrame {
         JbRegistro1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        botonprueba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -211,6 +212,14 @@ public class ViewLogin extends javax.swing.JFrame {
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 130, 40));
 
+        botonprueba.setText("Prueba");
+        botonprueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonpruebaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(botonprueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 560, -1, -1));
+
         escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
@@ -321,6 +330,14 @@ public class ViewLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JbRegistro1ActionPerformed
 
+    private void botonpruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonpruebaActionPerformed
+            ViewMenuPrincipal vmp = new ViewMenuPrincipal("El jere wacho");
+            vmp.setVisible(true);
+            vmp.setSize(1318,779);
+            escritorio.add(vmp);
+            vmp.moveToFront();
+    }//GEN-LAST:event_botonpruebaActionPerformed
+
     
   
     private void agregarInternalFrame(JInternalFrame ifr) {
@@ -380,6 +397,7 @@ public class ViewLogin extends javax.swing.JFrame {
     private javax.swing.JLabel JlblNewCamarero;
     private javax.swing.JLabel JlblRegistroDni;
     private javax.swing.JLabel JlblRegistroNombre;
+    private javax.swing.JButton botonprueba;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
