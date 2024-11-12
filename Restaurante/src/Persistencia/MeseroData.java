@@ -18,22 +18,23 @@ public class MeseroData {
         con = Conexion.getConexion();
     }
 
-    public void crearMesero(Mesero mesero) {
-        String sql = "INSERT INTO meseros (id, nombre, dni) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, mesero.getId());
-            ps.setString(2, mesero.getNombre());
-            ps.setString(3, mesero.getDni());
+    public boolean crearMesero(Mesero mesero) {
+        String sql = "INSERT INTO mesero (nombre, dni) VALUES (?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, mesero.getNombre());
+            ps.setString(2, mesero.getDni());
             ps.executeUpdate();
-            System.out.println("Mesero creado con éxito.");
+            System.out.println("Mesero registrado con éxito.");
+            return true;
         } catch (SQLException ex) {
-            System.out.println("Error al crear mesero: " + ex.getMessage());
+            System.out.println("Error al registrar mesero: " + ex.getMessage());
+            return false;
         }
     }
 
     public void eliminarMesero(int meseroId) {
-        String sql = "DELETE FROM meseros WHERE id = ?";
+        String sql = "DELETE FROM mesero WHERE id = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, meseroId);
@@ -45,7 +46,7 @@ public class MeseroData {
     }
 
     public void modificarMesero(Mesero mesero) {
-        String sql = "UPDATE meseros SET nombre = ?, dni = ? WHERE id = ?";
+        String sql = "UPDATE mesero SET nombre = ?, dni = ? WHERE id = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, mesero.getNombre());
@@ -59,18 +60,37 @@ public class MeseroData {
     }
 
     public Mesero buscarMeseroPorDNI(String dni) {
-        String sql = "SELECT * FROM meseros WHERE dni = ?";
+        String sql = "SELECT * FROM mesero WHERE dni = ?";
         Mesero mesero = null;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, dni);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                mesero = new Mesero(rs.getInt("id"), rs.getString("nombre"), rs.getString("dni"));
+                mesero = new Mesero(rs.getInt("id_mesero"), rs.getString("nombre"), rs.getString("dni"));
             }
         } catch (SQLException ex) {
             System.out.println("Error al buscar mesero: " + ex.getMessage());
         }
+        return mesero;
+    }
+    
+    public Mesero buscarMeseroPorNombreYDni(String nombre, String dni) {
+        String sql = "SELECT * FROM mesero WHERE nombre = ? AND dni = ?";
+        Mesero mesero = null;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ps.setString(2, dni);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                mesero = new Mesero(rs.getInt("id_mesero"), rs.getString("nombre"), rs.getString("dni"));
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar mesero: " + ex.getMessage());
+        }
+
         return mesero;
     }
 }

@@ -13,6 +13,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import AppPackage.AnimationClass;
+import Entidades.Mesero;
+import Persistencia.MeseroData;
+import javax.swing.JOptionPane;
 /**
  *
  * @author ariel
@@ -48,9 +51,9 @@ public class ViewLogin extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jtfUsuario = new javax.swing.JTextField();
+        jpfContraseña = new javax.swing.JPasswordField();
+        jbIngresar = new javax.swing.JButton();
         jPfondo = new FondoPanel();
         JTRegistroNombre = new javax.swing.JTextField();
         JlblNewCamarero = new javax.swing.JLabel();
@@ -60,7 +63,6 @@ public class ViewLogin extends javax.swing.JFrame {
         JbRegistro1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        Prueba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -98,7 +100,7 @@ public class ViewLogin extends javax.swing.JFrame {
         JlbRegistrarse.setForeground(new java.awt.Color(219, 198, 83));
         JlbRegistrarse.setText("Registrarse en el sistema");
         JlbRegistrarse.setToolTipText("");
-        JlbRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JlbRegistrarse.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         JlbRegistrarse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JlbRegistrarseMouseClicked(evt);
@@ -125,68 +127,73 @@ public class ViewLogin extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(219, 198, 83));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 280, 20));
 
-        jTextField1.setBackground(new java.awt.Color(51, 0, 0));
-        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setBorder(null);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jtfUsuario.setBackground(new java.awt.Color(51, 0, 0));
+        jtfUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        jtfUsuario.setBorder(null);
+        jtfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jtfUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 324, 280, 40));
+        jPanel1.add(jtfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 324, 280, 40));
 
-        jPasswordField1.setBackground(new java.awt.Color(51, 0, 0));
-        jPasswordField1.setForeground(new java.awt.Color(204, 204, 204));
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setBorder(null);
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 432, 280, 30));
+        jpfContraseña.setBackground(new java.awt.Color(51, 0, 0));
+        jpfContraseña.setForeground(new java.awt.Color(204, 204, 204));
+        jpfContraseña.setText("jPasswordField1");
+        jpfContraseña.setBorder(null);
+        jPanel1.add(jpfContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 432, 280, 30));
 
-        jButton1.setBackground(new java.awt.Color(51, 0, 0));
-        jButton1.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(219, 198, 83));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Offline.png"))); // NOI18N
-        jButton1.setText("  Ingresar");
-        jButton1.setBorder(null);
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Online.png"))); // NOI18N
-        jButton1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Online.png"))); // NOI18N
-        jButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Online.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbIngresar.setBackground(new java.awt.Color(51, 0, 0));
+        jbIngresar.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
+        jbIngresar.setForeground(new java.awt.Color(219, 198, 83));
+        jbIngresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Offline.png"))); // NOI18N
+        jbIngresar.setText("  Ingresar");
+        jbIngresar.setBorder(null);
+        jbIngresar.setBorderPainted(false);
+        jbIngresar.setContentAreaFilled(false);
+        jbIngresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbIngresar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Online.png"))); // NOI18N
+        jbIngresar.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Online.png"))); // NOI18N
+        jbIngresar.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Online.png"))); // NOI18N
+        jbIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jbIngresarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 210, 70));
+        jPanel1.add(jbIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 490, 210, 70));
 
         jPfondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPfondo.add(JTRegistroNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 370, 40));
+        jPfondo.add(JTRegistroNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -150, 370, 40));
 
         JlblNewCamarero.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         JlblNewCamarero.setForeground(new java.awt.Color(219, 198, 83));
         JlblNewCamarero.setText("Nuevo Camarero:");
         JlblNewCamarero.setToolTipText("");
         JlblNewCamarero.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPfondo.add(JlblNewCamarero, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, 300, 60));
+        jPfondo.add(JlblNewCamarero, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -150, 300, 60));
 
         JlblRegistroNombre.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         JlblRegistroNombre.setForeground(new java.awt.Color(219, 198, 83));
         JlblRegistroNombre.setText("Nombre:");
         JlblRegistroNombre.setToolTipText("");
         JlblRegistroNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPfondo.add(JlblRegistroNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 300, 60));
+        jPfondo.add(JlblRegistroNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -150, 300, 60));
 
         JlblRegistroDni.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
         JlblRegistroDni.setForeground(new java.awt.Color(219, 198, 83));
         JlblRegistroDni.setText("DNI:");
         JlblRegistroDni.setToolTipText("");
         JlblRegistroDni.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPfondo.add(JlblRegistroDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 300, 60));
-        jPfondo.add(JTRegistroDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 250, 370, 40));
+        jPfondo.add(JlblRegistroDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -150, 300, 60));
+        jPfondo.add(JTRegistroDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, -150, 370, 40));
 
         JbRegistro1.setText("Registrarme!");
-        jPfondo.add(JbRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 360, -1, -1));
+        JbRegistro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbRegistro1ActionPerformed(evt);
+            }
+        });
+        jPfondo.add(JbRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, -150, -1, -1));
 
         jPanel1.add(jPfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 910, 580));
 
@@ -203,14 +210,6 @@ public class ViewLogin extends javax.swing.JFrame {
         jLabel9.setToolTipText("");
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 130, 40));
-
-        Prueba.setText("Prueba");
-        Prueba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PruebaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Prueba, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 510, -1, -1));
 
         escritorio.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -239,9 +238,29 @@ public class ViewLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jbIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIngresarActionPerformed
+        String usuario = jtfUsuario.getText().trim();
+        String password = new String(jpfContraseña.getPassword()).trim();
+
+        // Instancia de MeseroData para verificar en la base de datos
+        MeseroData meseroData = new MeseroData();
+
+        // Llamamos a un método que valida si el nombre de usuario coincide con el nombre de mesero y el DNI como contraseña
+        Mesero mesero = meseroData.buscarMeseroPorNombreYDni(usuario, password);
+
+        if (mesero != null) {
+            // Si los datos son correctos, abrir el menú principal
+            ViewMenuPrincipal vmp = new ViewMenuPrincipal(mesero.getNombre());
+            vmp.setVisible(true);
+            vmp.setSize(1318,779);
+            escritorio.add(vmp);
+            vmp.moveToFront();
+            JOptionPane.showMessageDialog(this, "Bienvenido " + usuario , "Ingreso al sistema", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Si los datos son incorrectos, muestra un mensaje de error
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jbIngresarActionPerformed
 
     private void JlbRegistrarseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JlbRegistrarseMouseClicked
         JlbRegistrarse.setText("Registrarse en el sistema");
@@ -251,22 +270,56 @@ public class ViewLogin extends javax.swing.JFrame {
         registro.jLabelYUp(-150, 30, 10, 5,JlblNewCamarero );
         registro.jLabelYUp(-150, 200, 10, 5,JlblRegistroDni );
         registro.jLabelYUp(-150, 80, 10, 5,JlblRegistroNombre );
-        registro.jButtonYUp(-150, 350, 10, 5, Prueba);
+        registro.jButtonYUp(-150, 360, 10, 5, JbRegistro1);
         registro.jTextFieldYUp(-150, 250, 10, 5, JTRegistroDni);
         registro.jTextFieldYUp(-150, 130, 10, 5, JTRegistroNombre);
     }//GEN-LAST:event_JlbRegistrarseMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jtfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jtfUsuarioActionPerformed
 
-    private void PruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PruebaActionPerformed
-        ViewMenuPrincipal vmp = new ViewMenuPrincipal();
-        vmp.setVisible(true);
-        vmp.setSize(1318,779);
-        escritorio.add(vmp);
-        vmp.moveToFront();
-    }//GEN-LAST:event_PruebaActionPerformed
+    private void JbRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbRegistro1ActionPerformed
+        AnimationClass registro = new AnimationClass();
+        String nombre = JTRegistroNombre.getText().trim();
+        String dni = JTRegistroDni.getText().trim();
+
+        // Validación básica de campos vacíos
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+            JOptionPane.showMessageDialog(this, "El nombre solo puede contener letras", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (!dni.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "El DNI solo puede contener números", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+    // Validación de que los campos no estén vacíos
+    if (nombre.isEmpty() || dni.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+        // Creación de la instancia de Mesero y registro en la base de datos
+        Mesero mesero = new Mesero(0, nombre, dni); // '0' porque el ID lo autogenera la base de datos
+        MeseroData meseroData = new MeseroData();
+
+        boolean registrado = meseroData.crearMesero(mesero);
+
+        if (registrado) {
+            registro.jLabelYUp(30, -150, 10, 5,JlblNewCamarero );
+            registro.jLabelYUp(200, -150, 10, 5,JlblRegistroDni );
+            registro.jLabelYUp(80, -150, 10, 5,JlblRegistroNombre );
+            registro.jButtonYUp(360, -150, 10, 5, JbRegistro1);
+            registro.jTextFieldYUp(250, -150, 10, 5, JTRegistroDni);
+            registro.jTextFieldYUp(130, -150, 10, 5, JTRegistroNombre);
+            JOptionPane.showMessageDialog(this, "Mesero registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+            JTRegistroNombre.setText("");
+            JTRegistroDni.setText("");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al registrar el mesero", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_JbRegistro1ActionPerformed
 
     
   
@@ -327,9 +380,7 @@ public class ViewLogin extends javax.swing.JFrame {
     private javax.swing.JLabel JlblNewCamarero;
     private javax.swing.JLabel JlblRegistroDni;
     private javax.swing.JLabel JlblRegistroNombre;
-    private javax.swing.JButton Prueba;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -338,12 +389,13 @@ public class ViewLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPanel jPfondo;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbIngresar;
+    private javax.swing.JPasswordField jpfContraseña;
+    private javax.swing.JTextField jtfUsuario;
     // End of variables declaration//GEN-END:variables
 class FondoPanel extends JPanel {
         private Image imagen;
