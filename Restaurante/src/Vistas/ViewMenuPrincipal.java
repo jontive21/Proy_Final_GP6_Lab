@@ -4,10 +4,16 @@
  */
 package Vistas;
 
+import Entidades.DetalleProducto;
 import Entidades.Mesa;
+import Entidades.Producto;
+import Persistencia.DetalleProductoData;
 import Persistencia.MesaData;
+import Persistencia.ProductoData;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -18,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,6 +38,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private MesaData md;
     private List <Mesa> mesasList = new ArrayList<>();
     private static int mesasAgregadas;
+    private DefaultTableModel modelo;
     /**
      * Creates new form ViewMenuPrincipal
      */
@@ -45,6 +53,8 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         actualizarComboBoxMesas();
         jlblNombreLoggin.setText(nombreMesero);
         actualizarBotonesEstadoMesas();
+        configurarTabla();
+        cargarProductosComboBox();
     }
 
     /**
@@ -77,19 +87,19 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         JbCancelarModificarMesa = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
-        JbCancelar = new javax.swing.JButton();
+        JbCancelarDetallePedido = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jcProductoNombre = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jtDetallePedido = new javax.swing.JTable();
+        jcProductoCantidad = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
-        JbFinalizarPedido = new javax.swing.JButton();
-        JbEliminar = new javax.swing.JButton();
+        JbFinalizarDetallePedido = new javax.swing.JButton();
+        JbEliminarDetallePedido = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNombreCliente = new javax.swing.JTextField();
-        JbAgregar = new javax.swing.JButton();
+        JbAgregarDetallePedido = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -307,26 +317,26 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jDialog3.setPreferredSize(new java.awt.Dimension(520, 498));
+        jDialog3.setPreferredSize(new java.awt.Dimension(828, 540));
 
         jPanel4.setBackground(new java.awt.Color(51, 0, 0));
-        jPanel4.setPreferredSize(new java.awt.Dimension(520, 498));
+        jPanel4.setPreferredSize(new java.awt.Dimension(828, 540));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        JbCancelar.setBackground(new java.awt.Color(102, 0, 0));
-        JbCancelar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbCancelar.setForeground(new java.awt.Color(255, 204, 153));
-        JbCancelar.setText("Cancelar");
-        JbCancelar.setToolTipText("");
-        JbCancelar.setBorderPainted(false);
-        JbCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbCancelar.setIconTextGap(12);
-        JbCancelar.addActionListener(new java.awt.event.ActionListener() {
+        JbCancelarDetallePedido.setBackground(new java.awt.Color(102, 0, 0));
+        JbCancelarDetallePedido.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbCancelarDetallePedido.setForeground(new java.awt.Color(255, 204, 153));
+        JbCancelarDetallePedido.setText("Cancelar");
+        JbCancelarDetallePedido.setToolTipText("");
+        JbCancelarDetallePedido.setBorderPainted(false);
+        JbCancelarDetallePedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbCancelarDetallePedido.setIconTextGap(12);
+        JbCancelarDetallePedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbCancelarActionPerformed(evt);
+                JbCancelarDetallePedidoActionPerformed(evt);
             }
         });
-        jPanel4.add(JbCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 470, 110, 40));
+        jPanel4.add(JbCancelarDetallePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 470, 110, 40));
 
         jLabel20.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(219, 198, 83));
@@ -342,31 +352,34 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jLabel21.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
 
-        jComboBox1.setBackground(new java.awt.Color(204, 204, 204));
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel4.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 150, 30));
+        jcProductoNombre.setBackground(new java.awt.Color(204, 204, 204));
+        jcProductoNombre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel4.add(jcProductoNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 150, 30));
 
-        jTable1.setBackground(new java.awt.Color(176, 4, 47));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtDetallePedido.setBackground(new java.awt.Color(176, 4, 47));
+        jtDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID Producto", "Nombre", "Cantidad", "Monto"
+                "ID Producto", "Nombre", "Cantidad", "Monto", "Nombre Cliente"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtDetallePedido);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 740, 290));
 
-        jComboBox2.setBackground(new java.awt.Color(204, 204, 204));
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel4.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 150, 30));
+        jcProductoCantidad.setBackground(new java.awt.Color(204, 204, 204));
+        jcProductoCantidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcProductoCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcProductoCantidadActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jcProductoCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 150, 30));
 
         jLabel22.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(219, 198, 83));
@@ -375,35 +388,35 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jLabel22.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
-        JbFinalizarPedido.setBackground(new java.awt.Color(102, 0, 0));
-        JbFinalizarPedido.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbFinalizarPedido.setForeground(new java.awt.Color(255, 204, 153));
-        JbFinalizarPedido.setText("Finalizar pedido");
-        JbFinalizarPedido.setToolTipText("");
-        JbFinalizarPedido.setBorderPainted(false);
-        JbFinalizarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbFinalizarPedido.setIconTextGap(12);
-        JbFinalizarPedido.addActionListener(new java.awt.event.ActionListener() {
+        JbFinalizarDetallePedido.setBackground(new java.awt.Color(102, 0, 0));
+        JbFinalizarDetallePedido.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbFinalizarDetallePedido.setForeground(new java.awt.Color(255, 204, 153));
+        JbFinalizarDetallePedido.setText("Finalizar pedido");
+        JbFinalizarDetallePedido.setToolTipText("");
+        JbFinalizarDetallePedido.setBorderPainted(false);
+        JbFinalizarDetallePedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbFinalizarDetallePedido.setIconTextGap(12);
+        JbFinalizarDetallePedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbFinalizarPedidoActionPerformed(evt);
+                JbFinalizarDetallePedidoActionPerformed(evt);
             }
         });
-        jPanel4.add(JbFinalizarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 180, 40));
+        jPanel4.add(JbFinalizarDetallePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 180, 40));
 
-        JbEliminar.setBackground(new java.awt.Color(102, 0, 0));
-        JbEliminar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbEliminar.setForeground(new java.awt.Color(255, 204, 153));
-        JbEliminar.setText("Eliminar");
-        JbEliminar.setToolTipText("");
-        JbEliminar.setBorderPainted(false);
-        JbEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbEliminar.setIconTextGap(12);
-        JbEliminar.addActionListener(new java.awt.event.ActionListener() {
+        JbEliminarDetallePedido.setBackground(new java.awt.Color(102, 0, 0));
+        JbEliminarDetallePedido.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbEliminarDetallePedido.setForeground(new java.awt.Color(255, 204, 153));
+        JbEliminarDetallePedido.setText("Eliminar");
+        JbEliminarDetallePedido.setToolTipText("");
+        JbEliminarDetallePedido.setBorderPainted(false);
+        JbEliminarDetallePedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbEliminarDetallePedido.setIconTextGap(12);
+        JbEliminarDetallePedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbEliminarActionPerformed(evt);
+                JbEliminarDetallePedidoActionPerformed(evt);
             }
         });
-        jPanel4.add(JbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 110, 40));
+        jPanel4.add(JbEliminarDetallePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 110, 40));
 
         jLabel1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(219, 198, 83));
@@ -412,33 +425,32 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, -1, -1));
 
         jTextFieldNombreCliente.setBackground(new java.awt.Color(204, 204, 204));
-        jTextFieldNombreCliente.setForeground(new java.awt.Color(204, 204, 204));
         jPanel4.add(jTextFieldNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 260, 30));
 
-        JbAgregar.setBackground(new java.awt.Color(102, 0, 0));
-        JbAgregar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbAgregar.setForeground(new java.awt.Color(255, 204, 153));
-        JbAgregar.setText("Agregar");
-        JbAgregar.setToolTipText("");
-        JbAgregar.setBorderPainted(false);
-        JbAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbAgregar.setIconTextGap(12);
-        JbAgregar.addActionListener(new java.awt.event.ActionListener() {
+        JbAgregarDetallePedido.setBackground(new java.awt.Color(102, 0, 0));
+        JbAgregarDetallePedido.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbAgregarDetallePedido.setForeground(new java.awt.Color(255, 204, 153));
+        JbAgregarDetallePedido.setText("Agregar");
+        JbAgregarDetallePedido.setToolTipText("");
+        JbAgregarDetallePedido.setBorderPainted(false);
+        JbAgregarDetallePedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbAgregarDetallePedido.setIconTextGap(12);
+        JbAgregarDetallePedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbAgregarActionPerformed(evt);
+                JbAgregarDetallePedidoActionPerformed(evt);
             }
         });
-        jPanel4.add(JbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, 110, 40));
+        jPanel4.add(JbAgregarDetallePedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, 110, 40));
 
         javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
         jDialog3.getContentPane().setLayout(jDialog3Layout);
         jDialog3Layout.setHorizontalGroup(
             jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jDialog3Layout.setVerticalGroup(
             jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setPreferredSize(new java.awt.Dimension(1320, 680));
@@ -1101,17 +1113,57 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jDialog3.setVisible(true);
     }//GEN-LAST:event_JbTomarPedidoMesa5ActionPerformed
 
-    private void JbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JbCancelarActionPerformed
+    private void JbCancelarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCancelarDetallePedidoActionPerformed
+        dispose();
+    }//GEN-LAST:event_JbCancelarDetallePedidoActionPerformed
 
-    private void JbFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbFinalizarPedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JbFinalizarPedidoActionPerformed
+    private void JbFinalizarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbFinalizarDetallePedidoActionPerformed
+        // Crear una instancia de DetalleProductoData para interactuar con la base de datos
+        DetalleProductoData detalleProductoData = new DetalleProductoData();
 
-    private void JbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JbEliminarActionPerformed
+        // Iterar sobre las filas de la tabla para obtener los datos de cada detalle
+        for (int i = 0; i < jtDetallePedido.getRowCount(); i++) {
+            // Obtener los valores de cada columna en la fila actual
+            int idProducto = (int) jtDetallePedido.getValueAt(i, 0);
+            String nombreProducto = (String) jtDetallePedido.getValueAt(i, 1);
+            int cantidad = (int) jtDetallePedido.getValueAt(i, 2);
+            double precioUnitario = (double) jtDetallePedido.getValueAt(i, 3);
+            double subtotal = (double) jtDetallePedido.getValueAt(i, 4);
+
+            // Suponiendo que tienes el idPedido almacenado de alguna manera
+            int idPedido = obtenerIdPedido(); // Implementa este método para obtener el idPedido actual
+
+            // Crear un objeto Producto para el DetalleProducto
+            Producto producto = new Producto(); 
+            producto.setIdProducto(idProducto);
+            producto.setNombre(nombreProducto);
+            producto.setPrecio(precioUnitario);
+
+            // Crear el DetalleProducto con los datos obtenidos
+            DetalleProducto detalleProducto = new DetalleProducto(0, idPedido, producto, cantidad, subtotal);
+
+            // Insertar el detalle en la base de datos
+            detalleProductoData.agregarDetalleProducto(detalleProducto);
+        }
+
+        // Mostrar mensaje de confirmación
+        JOptionPane.showMessageDialog(this, "Todos los productos han sido agregados al detalle del pedido.");
+}
+
+// Método para obtener el idPedido (puedes modificarlo para obtener el id correcto)
+private int obtenerIdPedido() {
+    // Retorna el id del pedido actual (reemplaza con tu lógica para obtener el idPedido)
+    return 1; // Ejemplo: reemplaza con el id correcto
+    }//GEN-LAST:event_JbFinalizarDetallePedidoActionPerformed
+
+    private void JbEliminarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarDetallePedidoActionPerformed
+        int filaSeleccionada = jtDetallePedido.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            modelo.removeRow(filaSeleccionada);
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto para eliminar");
+        }
+    }//GEN-LAST:event_JbEliminarDetallePedidoActionPerformed
 
     private void JbTomarPedidoMesa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbTomarPedidoMesa3ActionPerformed
         jDialog3.pack();
@@ -1167,9 +1219,69 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jDialog3.setVisible(true);
     }//GEN-LAST:event_JbTomarPedidoMesa12ActionPerformed
 
-    private void JbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAgregarActionPerformed
+    private void JbAgregarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAgregarDetallePedidoActionPerformed
+        if (jcProductoNombre.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto");
+            return;
+        }
+
+        if (jTextFieldNombreCliente.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe ingresar el nombre del cliente");
+            return;
+        }
+
+        String nombreProducto = (String) jcProductoNombre.getSelectedItem();
+        String nombreCliente = jTextFieldNombreCliente.getText().trim();
+        int cantidad = Integer.parseInt((String) jcProductoCantidad.getSelectedItem());
+
+        ProductoData pd = new ProductoData();
+        List<Producto> productos = pd.buscarProductoPorNombre(nombreProducto); // Obtenemos la lista de productos
+
+        if (!productos.isEmpty()) {
+            Producto producto = productos.get(0); // Tomamos el primer producto de la lista
+
+            double subtotal = producto.getPrecio() * cantidad;
+
+            // Verificar si el producto ya está en la tabla
+            boolean productoExistente = false;
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                if (modelo.getValueAt(i, 0).equals(producto.getIdProducto())) {
+                    int cantidadActual = (int) modelo.getValueAt(i, 2);
+                    if (cantidadActual + cantidad <= producto.getCantidad()) {
+                        modelo.setValueAt(cantidadActual + cantidad, i, 2);
+                        modelo.setValueAt(producto.getPrecio() * (cantidadActual + cantidad), i, 4);
+                        productoExistente = true;
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No hay suficiente stock");
+                    }
+                    break;
+                }
+            }
+
+            if (!productoExistente) {
+                Object[] fila = {
+                    producto.getIdProducto(),
+                    producto.getNombre(),
+                    cantidad,
+                    producto.getPrecio(),
+                    subtotal,
+                    nombreCliente // Agrega el nombre del cliente a la nueva fila
+                };
+                modelo.addRow(fila);
+            }
+
+            // Limpiar selección
+            jcProductoNombre.setSelectedIndex(0);
+            jcProductoCantidad.removeAllItems();
+            jTextFieldNombreCliente.setText(""); // Limpiar el campo de nombre del cliente si es necesario
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no encontrado.");
+        }
+    }//GEN-LAST:event_JbAgregarDetallePedidoActionPerformed
+
+    private void jcProductoCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcProductoCantidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JbAgregarActionPerformed
+    }//GEN-LAST:event_jcProductoCantidadActionPerformed
 
     private void modificarLabelMesaSeleccionada(){
         Mesa mesaSeleccionada = (Mesa) selectedLabel.getClientProperty("mesa");
@@ -1342,19 +1454,68 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         }
         }
         
+        
+        private void cargarProductosComboBox() {
+            ProductoData pd = new ProductoData();  // Asumiendo que tienes una clase ProductoData
+            List<Producto> productos = pd.listarProductos();  // Método que trae todos los productos
+
+            jcProductoNombre.removeAllItems();
+            jcProductoNombre.addItem("Seleccione un producto");
+
+            for (Producto producto : productos) {
+                if (producto.getCantidad() > 0) {  // Solo mostrar productos con stock
+                    jcProductoNombre.addItem(producto.getNombre());
+                }
+            }
+
+            // Agregar un listener para cuando se seleccione un producto
+            jcProductoNombre.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    actualizarComboBoxCantidad();
+                }
+            });
+        }
+        
+        private void actualizarComboBoxCantidad() {
+            jcProductoCantidad.removeAllItems();
+
+            if (jcProductoNombre.getSelectedIndex() > 0) {  // Si hay un producto seleccionado
+                String nombreProducto = (String) jcProductoNombre.getSelectedItem();
+                ProductoData pd = new ProductoData();
+                List<Producto> productos = pd.buscarProductoPorNombre(nombreProducto);
+
+                if (!productos.isEmpty()) {
+                    Producto productoSeleccionado = productos.get(0); // Usar el primer producto de la lista
+                    for (int i = 1; i <= productoSeleccionado.getCantidad(); i++) {
+                        jcProductoCantidad.addItem(String.valueOf(i));
+                    }
+                }
+            }
+        }
     
+        private void configurarTabla() {
+            String[] titulos = {"ID Producto", "Nombre del Producto", "Cantidad", "Precio Unitario", "Subtotal", "Nombre del Cliente"};
+            modelo = new DefaultTableModel(titulos, 0) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;  // Hacer la tabla no editable
+                }
+            };
+            jtDetallePedido.setModel(modelo);
+        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> JCEstadoDeMesa;
     private javax.swing.JButton JbAEliminarMesa;
     private javax.swing.JButton JbAceptarMesa;
     private javax.swing.JButton JbAceptarModificarMesa;
-    private javax.swing.JButton JbAgregar;
+    private javax.swing.JButton JbAgregarDetallePedido;
     private javax.swing.JButton JbAñadirMesa;
-    private javax.swing.JButton JbCancelar;
+    private javax.swing.JButton JbCancelarDetallePedido;
     private javax.swing.JButton JbCancelarModificarMesa;
     private javax.swing.JButton JbDesloggear;
-    private javax.swing.JButton JbEliminar;
-    private javax.swing.JButton JbFinalizarPedido;
+    private javax.swing.JButton JbEliminarDetallePedido;
+    private javax.swing.JButton JbFinalizarDetallePedido;
     private javax.swing.JButton JbModificarMesa;
     private javax.swing.JButton JbTomarPedidoMesa1;
     private javax.swing.JButton JbTomarPedidoMesa10;
@@ -1392,8 +1553,6 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cantidadMesasComboBox;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -1420,8 +1579,10 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldNombreCliente;
+    private javax.swing.JComboBox<String> jcProductoCantidad;
+    private javax.swing.JComboBox<String> jcProductoNombre;
     private javax.swing.JLabel jlblNombreLoggin;
+    private javax.swing.JTable jtDetallePedido;
     // End of variables declaration//GEN-END:variables
 }

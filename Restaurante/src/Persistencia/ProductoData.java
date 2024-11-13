@@ -128,7 +128,32 @@ public class ProductoData {
     }
     
     
-    
+        public List<Producto> buscarProductoPorNombre(String nombreProducto) {
+            List<Producto> productos = new ArrayList<>();
+            String sql = "SELECT * FROM producto WHERE nombre LIKE ?";
+
+            try {
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, "%" + nombreProducto + "%");
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    Producto producto = new Producto(
+                        rs.getInt("id_producto"),
+                        rs.getString("nombre"),
+                        rs.getInt("cantidad"),
+                        rs.getDouble("precio"),
+                        rs.getString("tipo_producto")
+                    );
+                    productos.add(producto);
+                }
+                rs.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al buscar producto por nombre: " + e.getMessage());
+            }
+
+            return productos;
+        }
     
     
 
