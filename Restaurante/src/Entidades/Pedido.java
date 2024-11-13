@@ -4,37 +4,40 @@
  */
 package Entidades;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- *
- * @author Esquina del Vidrio
- */
+
+
 public class Pedido {
-    private int id;
+    private int idPedido;
     private Cliente cliente;
     private Mesero mesero;
     private Mesa mesa;
-    private List<Producto> productos;
-    private double monto;
+    private List<DetalleProducto> productos;
+    private double montoTotal;
     private boolean pagado;
+    private boolean entregado;
+    private LocalDateTime fecha;
 
-    public Pedido(int id, Cliente cliente, Mesero mesero, Mesa mesa, List<Producto> productos, double monto) {
-        this.id = id;
+    public Pedido(int idPedido, Cliente cliente, Mesero mesero, Mesa mesa, List<DetalleProducto> productos, double montoTotal, boolean pagado, boolean entregado, LocalDateTime fecha) {
+        this.idPedido = idPedido;
         this.cliente = cliente;
         this.mesero = mesero;
         this.mesa = mesa;
         this.productos = productos;
-        this.monto = monto;
-        this.pagado = false;
+        this.montoTotal = montoTotal;
+        this.pagado = pagado;
+        this.entregado = entregado;
+        this.fecha = fecha;
     }
 
-    public int getId() {
-        return id;
+    public int getIdPedido() {
+        return idPedido;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
     }
 
     public Cliente getCliente() {
@@ -44,7 +47,7 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-   
+
     public Mesero getMesero() {
         return mesero;
     }
@@ -61,20 +64,20 @@ public class Pedido {
         this.mesa = mesa;
     }
 
-    public List<Producto> getProductos() {
+    public List<DetalleProducto> getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Producto> productos) {
+    public void setProductos(List<DetalleProducto> productos) {
         this.productos = productos;
     }
 
-    public double getMonto() {
-        return monto;
+    public double getMontoTotal() {
+        return montoTotal;
     }
 
-    public void setMonto(double monto) {
-        this.monto = monto;
+    public void setMontoTotal(double montoTotal) {
+        this.montoTotal = montoTotal;
     }
 
     public boolean isPagado() {
@@ -84,4 +87,28 @@ public class Pedido {
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
     }
+
+    public boolean isEntregado() {
+        return entregado;
+    }
+
+    public void setEntregado(boolean entregado) {
+        this.entregado = entregado;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+  
+
+  
+
+  
+
+    
 }

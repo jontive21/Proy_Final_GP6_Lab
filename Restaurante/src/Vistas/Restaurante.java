@@ -12,6 +12,9 @@ import Persistencia.DetalleProductoData;
 
 import Persistencia.MesaData;
 import Persistencia.ProductoData;
+import java.sql.JDBCType;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +52,15 @@ public class Restaurante {
 //dpd.buscarDetalleProducto(2);
 
 //    
+
+
+LocalDateTime fecha =  LocalDateTime.now();
+    
+
+      Timestamp time = Timestamp.valueOf(fecha);
+      
+      
+        System.out.println(time);
     }
     
 }

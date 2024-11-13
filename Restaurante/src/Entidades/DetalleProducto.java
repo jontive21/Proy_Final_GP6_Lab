@@ -5,12 +5,14 @@ package Entidades;
 public class DetalleProducto {
     
     private int idDetalleProducto;
+    private int idPedido;
     private Producto producto;
     private int cantidad;
     private double monto;
 
-    public DetalleProducto(int idDetalleProducto, Producto producto, int cantidad, double monto) {
+    public DetalleProducto(int idDetalleProducto, int idPedido, Producto producto, int cantidad, double monto) {
         this.idDetalleProducto = idDetalleProducto;
+        this.idPedido = idPedido;
         this.producto = producto;
         this.cantidad = cantidad;
         this.monto = monto;
@@ -22,6 +24,14 @@ public class DetalleProducto {
 
     public void setIdDetalleProducto(int idDetalleProducto) {
         this.idDetalleProducto = idDetalleProducto;
+    }
+
+    public int getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(int idPedido) {
+        this.idPedido = idPedido;
     }
 
     public Producto getProducto() {
@@ -47,5 +57,7 @@ public class DetalleProducto {
     public void setMonto(double monto) {
         this.monto = monto;
     }
+
+
         
 }
