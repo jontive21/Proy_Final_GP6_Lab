@@ -77,7 +77,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         JbCancelarModificarMesa = new javax.swing.JButton();
         jDialog3 = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
-        JbModificarMesa1 = new javax.swing.JButton();
+        JbCancelar = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -85,8 +85,11 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
-        JbModificarMesa2 = new javax.swing.JButton();
-        JbModificarMesa3 = new javax.swing.JButton();
+        JbFinalizarPedido = new javax.swing.JButton();
+        JbEliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldNombreCliente = new javax.swing.JTextField();
+        JbAgregar = new javax.swing.JButton();
         escritorio = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -310,39 +313,41 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(520, 498));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        JbModificarMesa1.setBackground(new java.awt.Color(102, 0, 0));
-        JbModificarMesa1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbModificarMesa1.setForeground(new java.awt.Color(255, 204, 153));
-        JbModificarMesa1.setText("Cancelar");
-        JbModificarMesa1.setToolTipText("");
-        JbModificarMesa1.setBorderPainted(false);
-        JbModificarMesa1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbModificarMesa1.setIconTextGap(12);
-        JbModificarMesa1.addActionListener(new java.awt.event.ActionListener() {
+        JbCancelar.setBackground(new java.awt.Color(102, 0, 0));
+        JbCancelar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbCancelar.setForeground(new java.awt.Color(255, 204, 153));
+        JbCancelar.setText("Cancelar");
+        JbCancelar.setToolTipText("");
+        JbCancelar.setBorderPainted(false);
+        JbCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbCancelar.setIconTextGap(12);
+        JbCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbModificarMesa1ActionPerformed(evt);
+                JbCancelarActionPerformed(evt);
             }
         });
-        jPanel4.add(JbModificarMesa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 410, 110, 40));
+        jPanel4.add(JbCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 470, 110, 40));
 
         jLabel20.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(219, 198, 83));
         jLabel20.setText("Producto:");
         jLabel20.setToolTipText("");
         jLabel20.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, -1));
+        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
-        jLabel21.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(219, 198, 83));
-        jLabel21.setText("Agregar pedido:");
+        jLabel21.setText("AGREGAR PEDIDO");
         jLabel21.setToolTipText("");
         jLabel21.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
 
+        jComboBox1.setBackground(new java.awt.Color(204, 204, 204));
+        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel4.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 150, 30));
+        jPanel4.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 150, 30));
 
-        jTable1.setBackground(new java.awt.Color(204, 0, 51));
+        jTable1.setBackground(new java.awt.Color(176, 4, 47));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -356,57 +361,84 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 500, 250));
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 740, 290));
 
+        jComboBox2.setBackground(new java.awt.Color(204, 204, 204));
+        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel4.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 150, 30));
+        jPanel4.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 150, 30));
 
         jLabel22.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(219, 198, 83));
-        jLabel22.setText("Cantidad");
+        jLabel22.setText("Cantidad:");
         jLabel22.setToolTipText("");
         jLabel22.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
-        JbModificarMesa2.setBackground(new java.awt.Color(102, 0, 0));
-        JbModificarMesa2.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbModificarMesa2.setForeground(new java.awt.Color(255, 204, 153));
-        JbModificarMesa2.setText("Finalizar pedido");
-        JbModificarMesa2.setToolTipText("");
-        JbModificarMesa2.setBorderPainted(false);
-        JbModificarMesa2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbModificarMesa2.setIconTextGap(12);
-        JbModificarMesa2.addActionListener(new java.awt.event.ActionListener() {
+        JbFinalizarPedido.setBackground(new java.awt.Color(102, 0, 0));
+        JbFinalizarPedido.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbFinalizarPedido.setForeground(new java.awt.Color(255, 204, 153));
+        JbFinalizarPedido.setText("Finalizar pedido");
+        JbFinalizarPedido.setToolTipText("");
+        JbFinalizarPedido.setBorderPainted(false);
+        JbFinalizarPedido.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbFinalizarPedido.setIconTextGap(12);
+        JbFinalizarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbModificarMesa2ActionPerformed(evt);
+                JbFinalizarPedidoActionPerformed(evt);
             }
         });
-        jPanel4.add(JbModificarMesa2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 180, 40));
+        jPanel4.add(JbFinalizarPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 470, 180, 40));
 
-        JbModificarMesa3.setBackground(new java.awt.Color(102, 0, 0));
-        JbModificarMesa3.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        JbModificarMesa3.setForeground(new java.awt.Color(255, 204, 153));
-        JbModificarMesa3.setText("Agregar");
-        JbModificarMesa3.setToolTipText("");
-        JbModificarMesa3.setBorderPainted(false);
-        JbModificarMesa3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JbModificarMesa3.setIconTextGap(12);
-        JbModificarMesa3.addActionListener(new java.awt.event.ActionListener() {
+        JbEliminar.setBackground(new java.awt.Color(102, 0, 0));
+        JbEliminar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbEliminar.setForeground(new java.awt.Color(255, 204, 153));
+        JbEliminar.setText("Eliminar");
+        JbEliminar.setToolTipText("");
+        JbEliminar.setBorderPainted(false);
+        JbEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbEliminar.setIconTextGap(12);
+        JbEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JbModificarMesa3ActionPerformed(evt);
+                JbEliminarActionPerformed(evt);
             }
         });
-        jPanel4.add(JbModificarMesa3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 110, 40));
+        jPanel4.add(JbEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 110, 40));
+
+        jLabel1.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(219, 198, 83));
+        jLabel1.setText("Nombre del cliente:");
+        jLabel1.setToolTipText("");
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, -1, -1));
+
+        jTextFieldNombreCliente.setBackground(new java.awt.Color(204, 204, 204));
+        jTextFieldNombreCliente.setForeground(new java.awt.Color(204, 204, 204));
+        jPanel4.add(jTextFieldNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 260, 30));
+
+        JbAgregar.setBackground(new java.awt.Color(102, 0, 0));
+        JbAgregar.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        JbAgregar.setForeground(new java.awt.Color(255, 204, 153));
+        JbAgregar.setText("Agregar");
+        JbAgregar.setToolTipText("");
+        JbAgregar.setBorderPainted(false);
+        JbAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        JbAgregar.setIconTextGap(12);
+        JbAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbAgregarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(JbAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 470, 110, 40));
 
         javax.swing.GroupLayout jDialog3Layout = new javax.swing.GroupLayout(jDialog3.getContentPane());
         jDialog3.getContentPane().setLayout(jDialog3Layout);
         jDialog3Layout.setHorizontalGroup(
             jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
         );
         jDialog3Layout.setVerticalGroup(
             jDialog3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
         );
 
         setPreferredSize(new java.awt.Dimension(1320, 680));
@@ -591,8 +623,8 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jButton3.setBackground(new java.awt.Color(102, 0, 0));
         jButton3.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 204, 153));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atencion-al-cliente.png"))); // NOI18N
-        jButton3.setText("Clientes");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedido-en-linea.png"))); // NOI18N
+        jButton3.setText("Pedidos");
         jButton3.setToolTipText("");
         jButton3.setBorderPainted(false);
         jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -1069,17 +1101,17 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jDialog3.setVisible(true);
     }//GEN-LAST:event_JbTomarPedidoMesa5ActionPerformed
 
-    private void JbModificarMesa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbModificarMesa1ActionPerformed
+    private void JbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCancelarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JbModificarMesa1ActionPerformed
+    }//GEN-LAST:event_JbCancelarActionPerformed
 
-    private void JbModificarMesa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbModificarMesa2ActionPerformed
+    private void JbFinalizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbFinalizarPedidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JbModificarMesa2ActionPerformed
+    }//GEN-LAST:event_JbFinalizarPedidoActionPerformed
 
-    private void JbModificarMesa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbModificarMesa3ActionPerformed
+    private void JbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JbModificarMesa3ActionPerformed
+    }//GEN-LAST:event_JbEliminarActionPerformed
 
     private void JbTomarPedidoMesa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbTomarPedidoMesa3ActionPerformed
         jDialog3.pack();
@@ -1134,6 +1166,10 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jDialog3.setLocationRelativeTo(this);
         jDialog3.setVisible(true);
     }//GEN-LAST:event_JbTomarPedidoMesa12ActionPerformed
+
+    private void JbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JbAgregarActionPerformed
 
     private void modificarLabelMesaSeleccionada(){
         Mesa mesaSeleccionada = (Mesa) selectedLabel.getClientProperty("mesa");
@@ -1312,13 +1348,14 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JButton JbAEliminarMesa;
     private javax.swing.JButton JbAceptarMesa;
     private javax.swing.JButton JbAceptarModificarMesa;
+    private javax.swing.JButton JbAgregar;
     private javax.swing.JButton JbAñadirMesa;
+    private javax.swing.JButton JbCancelar;
     private javax.swing.JButton JbCancelarModificarMesa;
     private javax.swing.JButton JbDesloggear;
+    private javax.swing.JButton JbEliminar;
+    private javax.swing.JButton JbFinalizarPedido;
     private javax.swing.JButton JbModificarMesa;
-    private javax.swing.JButton JbModificarMesa1;
-    private javax.swing.JButton JbModificarMesa2;
-    private javax.swing.JButton JbModificarMesa3;
     private javax.swing.JButton JbTomarPedidoMesa1;
     private javax.swing.JButton JbTomarPedidoMesa10;
     private javax.swing.JButton JbTomarPedidoMesa11;
@@ -1360,6 +1397,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1383,6 +1421,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldNombreCliente;
     private javax.swing.JLabel jlblNombreLoggin;
     // End of variables declaration//GEN-END:variables
 }
