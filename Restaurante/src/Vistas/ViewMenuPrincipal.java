@@ -6,9 +6,13 @@ package Vistas;
 
 import Entidades.DetalleProducto;
 import Entidades.Mesa;
+import Entidades.Mesero;
 import Entidades.Producto;
+import Persistencia.ClienteData;
 import Persistencia.DetalleProductoData;
 import Persistencia.MesaData;
+import Persistencia.MeseroData;
+import Persistencia.PedidoData;
 import Persistencia.ProductoData;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -39,6 +43,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private List <Mesa> mesasList = new ArrayList<>();
     private static int mesasAgregadas;
     private DefaultTableModel modelo;
+    private ViewPedido viewPedido;
     /**
      * Creates new form ViewMenuPrincipal
      */
@@ -127,7 +132,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jLabel18 = new javax.swing.JLabel();
         JlblEstadoMesa = new javax.swing.JLabel();
         btnProductos = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jbPedidos = new javax.swing.JButton();
         btnProductos2 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jlblNombreLoggin = new javax.swing.JLabel();
@@ -632,21 +637,21 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         });
         jPanel1.add(btnProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 240, -1));
 
-        jButton3.setBackground(new java.awt.Color(102, 0, 0));
-        jButton3.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 204, 153));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedido-en-linea.png"))); // NOI18N
-        jButton3.setText("Pedidos");
-        jButton3.setToolTipText("");
-        jButton3.setBorderPainted(false);
-        jButton3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButton3.setIconTextGap(12);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbPedidos.setBackground(new java.awt.Color(102, 0, 0));
+        jbPedidos.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jbPedidos.setForeground(new java.awt.Color(255, 204, 153));
+        jbPedidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedido-en-linea.png"))); // NOI18N
+        jbPedidos.setText("Pedidos");
+        jbPedidos.setToolTipText("");
+        jbPedidos.setBorderPainted(false);
+        jbPedidos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jbPedidos.setIconTextGap(12);
+        jbPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbPedidosActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 240, -1));
+        jPanel1.add(jbPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 240, -1));
 
         btnProductos2.setBackground(new java.awt.Color(102, 0, 0));
         btnProductos2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -1078,9 +1083,14 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnProductosActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-          
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jbPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPedidosActionPerformed
+        ViewPedido vps = new ViewPedido();  
+        vps.setSize(1000, 650);       
+        escritorio.setLayout(null);
+        escritorio.add(vps);  
+        vps.setVisible(true);  
+        vps.moveToFront();
+    }//GEN-LAST:event_jbPedidosActionPerformed
 
     private void btnProductos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos2ActionPerformed
         
@@ -1118,37 +1128,63 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JbCancelarDetallePedidoActionPerformed
 
     private void JbFinalizarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbFinalizarDetallePedidoActionPerformed
-        // Crear una instancia de DetalleProductoData para interactuar con la base de datos
-        DetalleProductoData detalleProductoData = new DetalleProductoData();
+        int idMesa = obtenerIdMesaSeleccionada();
+    int filaCliente = 0; // Ajusta esta fila según corresponda
 
-        // Iterar sobre las filas de la tabla para obtener los datos de cada detalle
-        for (int i = 0; i < jtDetallePedido.getRowCount(); i++) {
-            // Obtener los valores de cada columna en la fila actual
-            int idProducto = (int) jtDetallePedido.getValueAt(i, 0);
-            String nombreProducto = (String) jtDetallePedido.getValueAt(i, 1);
-            int cantidad = (int) jtDetallePedido.getValueAt(i, 2);
-            double precioUnitario = (double) jtDetallePedido.getValueAt(i, 3);
-            double subtotal = (double) jtDetallePedido.getValueAt(i, 4);
+    if (jtDetallePedido.getRowCount() > 0) {
+        // Obtener el nombre del cliente desde la columna correspondiente
+        String nombreCliente = (String) jtDetallePedido.getValueAt(filaCliente, 4);  // Suponiendo que el nombre está en la columna 4
 
-            // Suponiendo que tienes el idPedido almacenado de alguna manera
-            int idPedido = obtenerIdPedido(); // Implementa este método para obtener el idPedido actual
+        ClienteData clienteData = new ClienteData();
+        int idCliente = clienteData.agregarCliente(nombreCliente, idMesa);
 
-            // Crear un objeto Producto para el DetalleProducto
-            Producto producto = new Producto(); 
-            producto.setIdProducto(idProducto);
-            producto.setNombre(nombreProducto);
-            producto.setPrecio(precioUnitario);
+        if (idCliente > 0) {
+            DetalleProductoData detalleProductoData = new DetalleProductoData();
+            List<Producto> productos = new ArrayList<>();
 
-            // Crear el DetalleProducto con los datos obtenidos
-            DetalleProducto detalleProducto = new DetalleProducto(0, idPedido, producto, cantidad, subtotal);
+            for (int i = 0; i < jtDetallePedido.getRowCount(); i++) {
+                // Convertir los valores al tipo adecuado
+                int idProducto = (int) jtDetallePedido.getValueAt(i, 0);
+                String nombreProducto = (String) jtDetallePedido.getValueAt(i, 1);
+                int cantidad = (int) jtDetallePedido.getValueAt(i, 2);
+                
+                // Convertir a double y luego a string si es necesario
+                double precioUnitario = ((Number) jtDetallePedido.getValueAt(i, 3)).doubleValue();
+                double subtotal = ((Number) jtDetallePedido.getValueAt(i, 4)).doubleValue();
 
-            // Insertar el detalle en la base de datos
-            detalleProductoData.agregarDetalleProducto(detalleProducto);
+                Producto producto = new Producto(idProducto, nombreProducto, cantidad, precioUnitario, "");
+                productos.add(producto);
+            }
+
+            // Crear el pedido principal sin idDetalleProductos, acorde a la firma de tu método
+            int idMesero = obtenerIdMeseroSeleccionado();
+            String fechaPedido = obtenerFechaYHoraActual();
+            String estado = "activo";
+            String pagado = "no";
+            double montoTotal = calcularMontoTotalPedido();
+
+            PedidoData pedidoData = new PedidoData();
+            int idPedido = pedidoData.crearPedido(idMesa, idMesero, idCliente, fechaPedido, estado, pagado, montoTotal);
+
+            if (idPedido > 0) {
+                // Agregar productos al pedido
+                pedidoData.agregarProductosAlPedido(idPedido, productos);
+                
+                JOptionPane.showMessageDialog(this, "Pedido creado exitosamente.");
+                actualizarVistaPedidos(idPedido, idCliente, idMesa, idMesero, montoTotal, fechaPedido, estado, pagado);
+                limpiarDetallePedido();
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al crear el pedido.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al crear el cliente.");
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "La tabla de detalles de pedido está vacía.");
+    }
+    }
+    
 
-        // Mostrar mensaje de confirmación
-        JOptionPane.showMessageDialog(this, "Todos los productos han sido agregados al detalle del pedido.");
-}
 
 // Método para obtener el idPedido (puedes modificarlo para obtener el id correcto)
 private int obtenerIdPedido() {
@@ -1504,6 +1540,101 @@ private int obtenerIdPedido() {
             };
             jtDetallePedido.setModel(modelo);
         }
+        
+        //metodos para crear el pedido:
+        private String obtenerFechaYHoraActual() {
+            // Devuelve la fecha y hora actual en formato "yyyy-MM-dd HH:mm:ss"
+            return java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
+
+        
+
+        private double calcularMontoTotalPedido() {
+        double total = 0.0;
+        for (int i = 0; i < jtDetallePedido.getRowCount(); i++) {
+            double monto = (double) jtDetallePedido.getValueAt(i, 4); // Columna de subtotal
+            total += monto;
+        }
+        return total;
+    }
+
+        private int obtenerIdMesaSeleccionada() {
+            try {
+            // Verificar si hay una mesa seleccionada
+            if (selectedLabel == null) {
+                JOptionPane.showMessageDialog(this, "Por favor seleccione una mesa");
+                return -1;
+            }
+
+            // Obtener el objeto Mesa almacenado en la propiedad del JLabel
+            Mesa mesa = (Mesa) selectedLabel.getClientProperty("mesa");
+
+            // Verificar si se pudo obtener el objeto Mesa
+            if (mesa == null) {
+                JOptionPane.showMessageDialog(this, "Error: La mesa seleccionada no contiene información válida");
+                return -1;
+            }
+
+            // Retornar el ID de la mesa
+            return mesa.getIdMesa();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al obtener el ID de la mesa: " + e.getMessage());
+            return -1;
+        }
+      }
+
+        private int obtenerIdMeseroSeleccionado() {
+            try {
+                // Crear una instancia de MeseroData
+                MeseroData meseroData = new MeseroData();
+
+                // Buscar el mesero por nombre en la base de datos
+                // Asumiendo que el nombre es único, si no lo es, necesitarías adaptar la lógica
+                Mesero mesero = meseroData.buscarMeseroPorNombre(nombreMesero);
+
+                if (mesero != null) {
+                    return mesero.getId();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error: No se encontró el mesero " + nombreMesero);
+                    return -1;
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al obtener el ID del mesero: " + e.getMessage());
+                return -1;
+            }
+        }
+        
+        private int obtenerIdClienteSeleccionado() {
+            // Implementa la lógica para obtener el ID del cliente seleccionado
+            return 1; // Ejemplo estático
+        }
+        private void actualizarVistaPedidos(int idPedido, int idCliente, int idMesa, int idMesero, double montoTotal, String fechaPedido, String estado, String pagado) {
+            if (viewPedido != null) {
+                try {
+                    viewPedido.agregarPedidoATabla(idPedido, idCliente, idMesa, idMesero, 
+                                              montoTotal, fechaPedido, estado, pagado);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Error al actualizar la vista de pedidos: " + e.getMessage());
+                }
+            }
+        }
+        
+        
+        private void limpiarDetallePedido() {
+            try {
+                DefaultTableModel modelo = (DefaultTableModel) jtDetallePedido.getModel();
+                modelo.setRowCount(0);
+                if (jTextFieldNombreCliente != null) {
+                    jTextFieldNombreCliente.setText("");
+                }
+                // Limpiar otros campos si es necesario
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al limpiar el detalle del pedido: " + e.getMessage());
+            }
+        }
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> JCEstadoDeMesa;
     private javax.swing.JButton JbAEliminarMesa;
@@ -1552,7 +1683,6 @@ private int obtenerIdPedido() {
     private javax.swing.JButton btnProductos2;
     private javax.swing.JComboBox<String> cantidadMesasComboBox;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JButton jButton3;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JDialog jDialog2;
     private javax.swing.JDialog jDialog3;
@@ -1580,6 +1710,7 @@ private int obtenerIdPedido() {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldNombreCliente;
+    private javax.swing.JButton jbPedidos;
     private javax.swing.JComboBox<String> jcProductoCantidad;
     private javax.swing.JComboBox<String> jcProductoNombre;
     private javax.swing.JLabel jlblNombreLoggin;

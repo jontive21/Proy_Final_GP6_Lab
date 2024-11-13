@@ -4,6 +4,8 @@
  */
 package Vistas;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USUARIO
@@ -230,6 +232,12 @@ public class ViewPedido extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonTicketjBtnBuscar
 
+    //metodos para agregar el pedido a tabla
+    public void agregarPedidoATabla(int idPedido, int idCliente, int idMesa, int idMesero, double montoTotal, String fechaPedido, String estado, String pagado) {
+    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+    Object[] fila = {idPedido, idCliente, idMesa, idMesero, montoTotal, fechaPedido, estado, pagado};
+    modelo.addRow(fila);
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

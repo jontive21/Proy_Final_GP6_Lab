@@ -11,8 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ClienteData {
     private Connection con;
@@ -22,18 +24,41 @@ public class ClienteData {
     }
 
     
-    public void agregarCliente(Cliente cliente) {
-        String sql = "INSERT INTO cliente (id_cliente, nombre, id_mesa) VALUES (?, ?, ?)";
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, cliente.getId());
-            ps.setString(2, cliente.getNombre());
-            ps.setInt(3, cliente.getMesaAsignada().getIdMesa());
-            ps.executeUpdate();
-            System.out.println("Cliente agregado con éxito.");
-        } catch (SQLException ex) {
-            System.out.println("Error al agregar cliente: " + ex.getMessage());
+    public int agregarCliente(String nombre, int idMesa) {
+        int clienteId = -1;
+
+        // Verificar si la mesa ya está asignada a otro cliente activo
+        String queryVerificarMesa = "SELECT id_cliente FROM cliente WHERE id_mesa = ? AND estado = 'activo'";
+        try (PreparedStatement psVerificar = con.prepareStatement(queryVerificarMesa)) {
+            psVerificar.setInt(1, idMesa);
+            ResultSet rs = psVerificar.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "La mesa " + idMesa + " ya está ocupada.");
+                return -1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
+
+        // Insertar nuevo cliente
+        String queryInsertarCliente = "INSERT INTO cliente (nombre, id_mesa, estado) VALUES (?, ?, 'activo')";
+        try (PreparedStatement psInsertar = con.prepareStatement(queryInsertarCliente, Statement.RETURN_GENERATED_KEYS)) {
+            psInsertar.setString(1, nombre);
+            psInsertar.setInt(2, idMesa);
+            psInsertar.executeUpdate();
+
+            ResultSet rs = psInsertar.getGeneratedKeys();
+            if (rs.next()) {
+                clienteId = rs.getInt(1); // Obtener el ID del cliente insertado
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al agregar cliente: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return clienteId;
     }
 
  

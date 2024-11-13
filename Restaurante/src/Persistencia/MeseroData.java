@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeseroData {
     private Connection con;
@@ -89,6 +91,28 @@ public class MeseroData {
             }
         } catch (SQLException ex) {
             System.out.println("Error al buscar mesero: " + ex.getMessage());
+        }
+
+        return mesero;
+    }
+    
+    public Mesero buscarMeseroPorNombre(String nombre) {
+        String sql = "SELECT * FROM mesero WHERE nombre = ?";
+        Mesero mesero = null;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                mesero = new Mesero(
+                    rs.getInt("id_mesero"),
+                    rs.getString("nombre"),
+                    rs.getString("dni")
+                );
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al buscar mesero por nombre: " + ex.getMessage());
         }
 
         return mesero;

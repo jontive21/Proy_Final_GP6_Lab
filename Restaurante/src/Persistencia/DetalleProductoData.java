@@ -18,27 +18,26 @@ public class DetalleProductoData {
         con = Conexion.getConexion();
     }
 
-    public void agregarDetalleProducto (DetalleProducto dp){
-        
-           try {
-               String sql="INSERT INTO detalle_producto(id_producto, cantidad, monto)"
-                       +"VALUES(?,?,?)";
-               PreparedStatement ps=con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);//iddetproduct
-               ps.setInt(1,dp.getProducto().getIdProducto());
-               ps.setInt(2,dp.getCantidad());
-               ps.setDouble(3,dp.getMonto());
-               ps.executeUpdate();
-               
-               ResultSet rs=ps.getGeneratedKeys(); //va a venir una matriz con una sola conlumna del id 
-               if(rs.next()){ //si hay un elemento
-                   dp.setIdDetalleProducto(rs.getInt(1)); //devolviendo con referencia id
-                   JOptionPane.showMessageDialog(null, "agregaste el detalle producto");
-                   
-               }
-               
-           } catch (SQLException ex) {
-              JOptionPane.showMessageDialog(null, "error al acceder al detalle del producto" + ex.getMessage());
-           }    
+    public int agregarDetalleProducto(DetalleProducto detalleProducto) {
+        int detalleProductoId = -1;
+        String query = "INSERT INTO detalle_producto (id_pedido, id_producto, cantidad, subtotal) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, detalleProducto.getIdPedido());
+            ps.setInt(2, detalleProducto.getProducto().getIdProducto());
+            ps.setInt(3, detalleProducto.getCantidad());
+            ps.setDouble(4, detalleProducto.getMonto());
+
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                detalleProductoId = rs.getInt(1); // Obtener el ID generado
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return detalleProductoId;
     }
     
     public void modificarDetalleProducto(DetalleProducto dp){
