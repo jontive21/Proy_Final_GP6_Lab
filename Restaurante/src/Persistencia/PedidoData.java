@@ -9,6 +9,7 @@ import Entidades.Pedido;
 import Entidades.Producto;
 import Entidades.Mesero;
 import Entidades.Cliente;
+import Entidades.Mesa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,7 +90,80 @@ public class PedidoData {
     }
     
 
+    public List<Pedido> obtenerTodosLosPedidos() {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = "SELECT * FROM pedido";
+
+        try (PreparedStatement ps = con.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int idPedido = rs.getInt("id_pedido");
+                int idCliente = rs.getInt("id_cliente");
+                int idMesero = rs.getInt("id_mesero");
+                int idMesa = rs.getInt("id_mesa");
+                double montoTotal = rs.getDouble("monto");
+                boolean pagado = rs.getBoolean("pagado");
+                boolean entregado = rs.getString("estado").equals("Entregado");
+                LocalDateTime fecha = rs.getTimestamp("fecha_pedido").toLocalDateTime();
+
+                Cliente cliente = new ClienteData().buscarClientePorId(idCliente);
+                Mesero mesero = new MeseroData().buscarMeseroPorId(idMesero);
+                Mesa mesa = new MesaData().buscarMesaPorId(idMesa);
+
+                Pedido pedido = new Pedido(idPedido, cliente, mesero, mesa, null, montoTotal, pagado, entregado, fecha);
+                pedidos.add(pedido);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los pedidos: " + e.getMessage());
+        }
+
+        return pedidos;
+    }
     
+        public void cambiarEstadoPago(int idPedido, boolean pagado) {
+            String sql = "UPDATE pedido SET pagado = ? WHERE id_pedido = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, pagado ? "si" : "no"); // "si" para pagado, "no" para no pagado
+                ps.setInt(2, idPedido);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el estado de pago: " + e.getMessage());
+            }
+        }
+
+        
+        public void cambiarEstadoEntrega(int idPedido, boolean entregado) {
+            String sql = "UPDATE pedido SET estado = ? WHERE id_pedido = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, entregado ? "Entregado" : "No entregado"); // "Entregado" o "No entregado"
+                ps.setInt(2, idPedido);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al actualizar el estado de entrega: " + e.getMessage());
+            }
+        }
+
+        
+        public void borrarPedido(int idPedido) {
+            String sqlDeleteDetalle = "DELETE FROM detalle_producto WHERE id_pedido = ?";
+            String sqlDeletePedido = "DELETE FROM pedido WHERE id_pedido = ?";
+
+            try (PreparedStatement psDetalle = con.prepareStatement(sqlDeleteDetalle);
+                 PreparedStatement psPedido = con.prepareStatement(sqlDeletePedido)) {
+
+                //primero elimina los registros relacionados en detalle
+                psDetalle.setInt(1, idPedido);
+                psDetalle.executeUpdate();
+
+                // dsp elimina el pedido
+                psPedido.setInt(1, idPedido);
+                psPedido.executeUpdate();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + e.getMessage());
+            }
+        }
 }
 
     

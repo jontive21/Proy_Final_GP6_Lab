@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class MesaData {
     private Connection con;
@@ -104,5 +105,26 @@ public class MesaData {
         } catch (SQLException ex) {
             System.out.println("Error al eliminar mesa: " + ex.getMessage());
         }
+    }
+    
+    public Mesa buscarMesaPorId(int idMesa) {
+        Mesa mesa = null;
+        String sql = "SELECT * FROM mesa WHERE id_mesa = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idMesa);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_mesa");
+                int capacidad = rs.getInt("capacidad");
+                String estado = rs.getString("estado");
+
+                mesa = new Mesa(id, capacidad, estado); // Ajusta al constructor de Mesa
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar mesa: " + e.getMessage());
+        }
+        return mesa;
     }
 }

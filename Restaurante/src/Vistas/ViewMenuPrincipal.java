@@ -1176,7 +1176,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     // Obtener los datos adicionales para crear el pedido
     int idMesero = obtenerIdMeseroSeleccionado();
     LocalDateTime fechaPedido = LocalDateTime.now();  // Fecha y hora actuales
-    String estado = "activo";
+    String estado = "No entregado";
     String pagado = "no";
     double montoTotal = calcularMontoTotalPedido();  // Calcular el total del pedido
 

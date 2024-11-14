@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class MeseroData {
     private Connection con;
@@ -115,6 +116,27 @@ public class MeseroData {
             System.out.println("Error al buscar mesero por nombre: " + ex.getMessage());
         }
 
+        return mesero;
+    }
+    
+    public Mesero buscarMeseroPorId(int idMesero) {
+        Mesero mesero = null;
+        String sql = "SELECT * FROM mesero WHERE id_mesero = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idMesero);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id_mesero");
+                String nombre = rs.getString("nombre");
+                String dni = rs.getString("dni"); // Asumiendo que la tabla tiene una columna dni
+
+                mesero = new Mesero(id, nombre, dni); // Ajusta al constructor de Mesero
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al buscar mesero: " + e.getMessage());
+        }
         return mesero;
     }
 }

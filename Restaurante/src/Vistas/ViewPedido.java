@@ -6,6 +6,7 @@ package Vistas;
 
 import Entidades.Conexion;
 import Entidades.Pedido;
+import Persistencia.PedidoData;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
@@ -23,7 +24,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
      */
     public ViewPedido() {
         initComponents();
-        
+        mostrarPedidosEnTabla();
     }
 
     /**
@@ -40,7 +41,6 @@ public class ViewPedido extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         pagado = new javax.swing.JButton();
-        jButtonModificar = new javax.swing.JButton();
         jButtonEntregar = new javax.swing.JButton();
         jButtonAnulado = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -73,40 +73,29 @@ public class ViewPedido extends javax.swing.JInternalFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 15, 825, -1));
 
         pagado.setBackground(new java.awt.Color(102, 0, 0));
-        pagado.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        pagado.setFont(new java.awt.Font("Cambria", 1, 15)); // NOI18N
         pagado.setForeground(new java.awt.Color(255, 204, 153));
-        pagado.setText("Pagado");
+        pagado.setText("Pago/inpago");
         pagado.setIconTextGap(12);
         pagado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pagadojBtnBuscar(evt);
             }
         });
-        jPanel1.add(pagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 434, 137, 40));
-
-        jButtonModificar.setBackground(new java.awt.Color(102, 0, 0));
-        jButtonModificar.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        jButtonModificar.setForeground(new java.awt.Color(255, 204, 153));
-        jButtonModificar.setText("Modificar");
-        jButtonModificar.setIconTextGap(12);
-        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModificarjBtnBuscar(evt);
-            }
-        });
-        jPanel1.add(jButtonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 273, -1, 40));
+        jPanel1.add(pagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 540, 137, 40));
 
         jButtonEntregar.setBackground(new java.awt.Color(102, 0, 0));
-        jButtonEntregar.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        jButtonEntregar.setFont(new java.awt.Font("Cambria", 1, 16)); // NOI18N
         jButtonEntregar.setForeground(new java.awt.Color(255, 204, 153));
-        jButtonEntregar.setText("Entregar");
+        jButtonEntregar.setText("Cambiar estado");
+        jButtonEntregar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButtonEntregar.setIconTextGap(12);
         jButtonEntregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEntregarjBtnBuscar(evt);
             }
         });
-        jPanel1.add(jButtonEntregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 492, 137, 40));
+        jPanel1.add(jButtonEntregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 150, 40));
 
         jButtonAnulado.setBackground(new java.awt.Color(102, 0, 0));
         jButtonAnulado.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -118,25 +107,30 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButtonAnuladojBtnBuscar(evt);
             }
         });
-        jPanel1.add(jButtonAnulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 377, 137, 40));
+        jPanel1.add(jButtonAnulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 540, 137, 40));
 
         jtpedidos.setBackground(new java.awt.Color(102, 0, 0));
         jtpedidos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jtpedidos.setForeground(new java.awt.Color(255, 255, 255));
         jtpedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID Pedido", "Mesa n°", "Moso n°", "Cliente n°", "Fecha y hora", "Estado", "Abonado", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jtpedidos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 115, 556, 417));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 115, 830, 417));
 
         jButtonTicket.setBackground(new java.awt.Color(102, 0, 0));
         jButtonTicket.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -148,17 +142,17 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButtonTicketjBtnBuscar(evt);
             }
         });
-        jPanel1.add(jButtonTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 325, 137, 40));
+        jPanel1.add(jButtonTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 540, 137, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
         );
 
         pack();
@@ -169,19 +163,54 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void pagadojBtnBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagadojBtnBuscar
-        // TODO add your handling code here:
+        int selectedRow = jtpedidos.getSelectedRow();
+        if (selectedRow != -1) {
+            int idPedido = (int) jtpedidos.getValueAt(selectedRow, 0); // ID en la primera columna
+            String estadoActual = (String) jtpedidos.getValueAt(selectedRow, 6); // Columna de pago
+            boolean nuevoEstadoPago = estadoActual.equals("No Pagado");
+
+            PedidoData pedidoData = new PedidoData();
+            pedidoData.cambiarEstadoPago(idPedido, nuevoEstadoPago);
+
+            // Actualizar en la tabla visualmente
+            jtpedidos.setValueAt(nuevoEstadoPago ? "Pagado" : "No Pagado", selectedRow, 6);
+            JOptionPane.showMessageDialog(this, "Estado de pago actualizado.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un pedido para cambiar su estado de pago.");
+        }
     }//GEN-LAST:event_pagadojBtnBuscar
 
-    private void jButtonModificarjBtnBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarjBtnBuscar
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonModificarjBtnBuscar
-
     private void jButtonEntregarjBtnBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntregarjBtnBuscar
-        // TODO add your handling code here:
+        int selectedRow = jtpedidos.getSelectedRow();
+        if (selectedRow != -1) {
+            int idPedido = (int) jtpedidos.getValueAt(selectedRow, 0); // ID en la primera columna
+            String estadoActual = (String) jtpedidos.getValueAt(selectedRow, 5); // Columna de entrega
+            boolean nuevoEstadoEntrega = estadoActual.equals("No Entregado");
+
+            PedidoData pedidoData = new PedidoData();
+            pedidoData.cambiarEstadoEntrega(idPedido, nuevoEstadoEntrega);
+
+            // Actualizar en la tabla visualmente
+            jtpedidos.setValueAt(nuevoEstadoEntrega ? "Entregado" : "No Entregado", selectedRow, 5);
+            JOptionPane.showMessageDialog(this, "Estado de entrega actualizado.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un pedido para cambiar su estado de entrega.");
+        }
     }//GEN-LAST:event_jButtonEntregarjBtnBuscar
 
     private void jButtonAnuladojBtnBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnuladojBtnBuscar
-        // TODO add your handling code here:
+        int selectedRow = jtpedidos.getSelectedRow();
+        if (selectedRow != -1) {
+            int idPedido = (int) jtpedidos.getValueAt(selectedRow, 0); // Asumiendo que el ID está en la primera columna
+            PedidoData pedidoData = new PedidoData();
+            pedidoData.borrarPedido(idPedido);
+
+            // Remover visualmente la fila de la tabla
+            ((DefaultTableModel) jtpedidos.getModel()).removeRow(selectedRow);
+            JOptionPane.showMessageDialog(this, "Pedido eliminado.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un pedido para eliminar.");
+        }
     }//GEN-LAST:event_jButtonAnuladojBtnBuscar
 
     private void jButtonTicketjBtnBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTicketjBtnBuscar
@@ -199,25 +228,25 @@ public class ViewPedido extends javax.swing.JInternalFrame {
 
    
     
-    private void mostrarPedidosEnTabla(List<Pedido> pedidos) {
+   
+    
+    private void mostrarPedidosEnTabla() {
+    PedidoData pedidoData = new PedidoData();
+    List<Pedido> pedidos = pedidoData.obtenerTodosLosPedidos();
+
     DefaultTableModel modelo = (DefaultTableModel) jtpedidos.getModel();
-    modelo.setRowCount(0); // Limpia la tabla antes de agregar datos
+    modelo.setRowCount(0); // Limpiar la tabla antes de agregar datos
 
-    // Define las columnas que quieres mostrar en la tabla
-    String[] columnas = {"ID Pedido", "Cliente", "Mesa", "Mesero", "Monto Total", "Fecha", "Estado", "Pagado"};
-    modelo.setColumnIdentifiers(columnas);
-
-    // Itera sobre la lista de pedidos y agrega una fila por cada pedido
     for (Pedido pedido : pedidos) {
         Object[] fila = {
             pedido.getIdPedido(),
-            pedido.getCliente().getNombre(), // Asumiendo que tienes un método getNombre() en Cliente
-            pedido.getMesa().getIdMesa(), // Asumiendo que tienes un método getNumero() en Mesa
-            pedido.getMesero().getNombre(), // Asumiendo que tienes un método getNombre() en Mesero
-            pedido.getMontoTotal(),
-            pedido.getFecha(),
+            pedido.getMesa().getIdMesa(),
+            pedido.getMesero().getId(),
+            pedido.getCliente().getId(),
+            pedido.getFecha().toString(),
             pedido.isEntregado() ? "Entregado" : "No entregado",
-            pedido.isPagado() ? "Pagado" : "No Pagado"
+            pedido.isPagado() ? "No Pagado" : "Pagado",
+            pedido.getMontoTotal()
         };
         modelo.addRow(fila);
     }
@@ -227,7 +256,6 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAnulado;
     private javax.swing.JButton jButtonEntregar;
-    private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonTicket;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
