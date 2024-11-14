@@ -25,25 +25,10 @@ public class ClienteData {
 
     
     public int agregarCliente(String nombre, int idMesa) {
-        int clienteId = -1;
+         int clienteId = -1;
 
-        // Verificar si la mesa ya está asignada a otro cliente activo
-        String queryVerificarMesa = "SELECT id_cliente FROM cliente WHERE id_mesa = ? AND estado = 'activo'";
-        try (PreparedStatement psVerificar = con.prepareStatement(queryVerificarMesa)) {
-            psVerificar.setInt(1, idMesa);
-            ResultSet rs = psVerificar.executeQuery();
-
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "La mesa " + idMesa + " ya está ocupada.");
-                return -1;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
-
-        // Insertar nuevo cliente
-        String queryInsertarCliente = "INSERT INTO cliente (nombre, id_mesa, estado) VALUES (?, ?, 'activo')";
+        // Insertar nuevo cliente sin verificar ocupación de mesa
+        String queryInsertarCliente = "INSERT INTO cliente (nombre, id_mesa) VALUES (?, ?)";
         try (PreparedStatement psInsertar = con.prepareStatement(queryInsertarCliente, Statement.RETURN_GENERATED_KEYS)) {
             psInsertar.setString(1, nombre);
             psInsertar.setInt(2, idMesa);
@@ -128,6 +113,25 @@ public class ClienteData {
         cliente.setMesaAsignada(mesa);
         modificarCliente(cliente);
         System.out.println("Mesa asignada al cliente " + cliente.getNombre() + ".");
+    }
+    public int obtenerIdClientePorNombreYMesa(String nombre, int idMesa) {
+        String sql = "SELECT id_cliente FROM cliente WHERE nombre = ? AND id_mesa = ?";
+        int clienteId = -1;
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, nombre);  // Establecer el nombre del cliente
+            ps.setInt(2, idMesa);     // Establecer el ID de la mesa
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                clienteId = rs.getInt("id_cliente"); // Obtener el ID del cliente
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener ID de cliente por nombre y mesa: " + ex.getMessage());
+        }
+
+        return clienteId; // Retorna -1 si no se encuentra el cliente
     }
 }
 

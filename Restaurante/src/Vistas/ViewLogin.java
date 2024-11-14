@@ -331,7 +331,7 @@ public class ViewLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_JbRegistro1ActionPerformed
 
     private void botonpruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonpruebaActionPerformed
-            ViewMenuPrincipal vmp = new ViewMenuPrincipal("El jere wacho");
+            ViewMenuPrincipal vmp = new ViewMenuPrincipal("Jeremias");
             vmp.setVisible(true);
             vmp.setSize(1318,779);
             escritorio.add(vmp);

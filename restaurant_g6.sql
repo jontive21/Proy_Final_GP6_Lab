@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2024 a las 02:22:06
+-- Tiempo de generación: 14-11-2024 a las 06:06:29
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `restaurant_g6`
 --
-CREATE DATABASE IF NOT EXISTS `restaurant_g6` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `restaurant_g6`;
 
 -- --------------------------------------------------------
 
@@ -35,6 +33,28 @@ CREATE TABLE `cliente` (
   `id_mesa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`id_cliente`, `nombre`, `id_mesa`) VALUES
+(1, 'Jeremias', 1),
+(2, 'Fabricio', 1),
+(3, 'Julio', 1),
+(4, 'kira', 2),
+(5, 'kiko', 2),
+(6, 'Jeremias', 1),
+(7, 'Pablito', 1),
+(8, 'Kiko', 5),
+(9, 'kagumi', 5),
+(10, 'juan', 5),
+(11, 'yeyu', 5),
+(12, 'xami', 5),
+(13, 'arian', 3),
+(14, 'Macumbero', 3),
+(15, 'gallardo', 3),
+(16, 'xawe', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -43,10 +63,20 @@ CREATE TABLE `cliente` (
 
 CREATE TABLE `detalle_producto` (
   `id_detalle_productos` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `monto` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `detalle_producto`
+--
+
+INSERT INTO `detalle_producto` (`id_detalle_productos`, `id_pedido`, `id_producto`, `cantidad`, `monto`) VALUES
+(14, 9, 3, 3, 1500),
+(15, 10, 2, 4, 1200),
+(16, 10, 2, 4, 4800);
 
 -- --------------------------------------------------------
 
@@ -65,7 +95,11 @@ CREATE TABLE `mesa` (
 --
 
 INSERT INTO `mesa` (`id_mesa`, `capacidad`, `estado`) VALUES
-(1, 4, 'libre');
+(1, 2, 'Libre'),
+(2, 2, 'Libre'),
+(3, 2, 'Ocupada'),
+(4, 4, 'libre'),
+(5, 2, 'Libre');
 
 -- --------------------------------------------------------
 
@@ -84,7 +118,8 @@ CREATE TABLE `mesero` (
 --
 
 INSERT INTO `mesero` (`id_mesero`, `nombre`, `dni`) VALUES
-(1, 'Juan Pérez', '12345678');
+(1, 'Juan Pérez', '12345678'),
+(2, 'Jeremias', '39797677');
 
 -- --------------------------------------------------------
 
@@ -94,15 +129,30 @@ INSERT INTO `mesero` (`id_mesero`, `nombre`, `dni`) VALUES
 
 CREATE TABLE `pedido` (
   `id_pedido` int(11) NOT NULL,
-  `id_detalle_productos` int(11) NOT NULL,
   `id_mesa` int(11) DEFAULT NULL,
   `id_mesero` int(11) DEFAULT NULL,
-  `id_cliente` int(11) NOT NULL,
-  `fecha_pedido` datetime DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `fecha_pedido` datetime DEFAULT current_timestamp(),
   `estado` varchar(10) NOT NULL,
   `pagado` varchar(10) NOT NULL,
   `monto` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id_pedido`, `id_mesa`, `id_mesero`, `id_cliente`, `fecha_pedido`, `estado`, `pagado`, `monto`) VALUES
+(1, 1, 2, 7, '2024-11-14 00:12:52', 'activo', 'no', 3600),
+(2, 5, 2, 8, '2024-11-14 00:14:18', 'activo', 'no', 4200),
+(3, 5, 2, 9, '2024-11-14 00:18:23', 'activo', 'no', 3200),
+(4, 5, 2, 10, '2024-11-14 00:35:50', 'activo', 'no', 7500),
+(5, 5, 2, 11, '2024-11-14 00:38:24', 'activo', 'no', 3600),
+(6, 5, 2, 12, '2024-11-14 00:40:02', 'activo', 'no', 7500),
+(7, 3, 2, 13, '2024-11-14 00:44:08', 'activo', 'no', 1800),
+(8, 3, 2, 14, '2024-11-14 01:13:25', 'activo', 'no', 4800),
+(9, 3, 2, 15, '2024-11-14 01:23:22', 'activo', 'no', 4500),
+(10, 3, 2, 16, '2024-11-14 01:25:20', 'activo', 'no', 4800);
 
 -- --------------------------------------------------------
 
@@ -144,14 +194,15 @@ INSERT INTO `producto` (`id_producto`, `nombre`, `cantidad`, `precio`, `tipo_pro
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`id_cliente`),
-  ADD UNIQUE KEY `mesa asignada` (`id_mesa`);
+  ADD KEY `id_mesa` (`id_mesa`);
 
 --
 -- Indices de la tabla `detalle_producto`
 --
 ALTER TABLE `detalle_producto`
   ADD PRIMARY KEY (`id_detalle_productos`),
-  ADD KEY `id_producto` (`id_producto`);
+  ADD KEY `id_producto` (`id_producto`),
+  ADD KEY `id_pedido` (`id_pedido`);
 
 --
 -- Indices de la tabla `mesa`
@@ -171,10 +222,9 @@ ALTER TABLE `mesero`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id_pedido`),
-  ADD UNIQUE KEY `id_cliente` (`id_cliente`),
   ADD KEY `id_mesa` (`id_mesa`),
   ADD KEY `id_mesero` (`id_mesero`),
-  ADD KEY `id_detalle_productos` (`id_detalle_productos`);
+  ADD KEY `id_cliente` (`id_cliente`);
 
 --
 -- Indices de la tabla `producto`
@@ -190,31 +240,31 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_producto`
 --
 ALTER TABLE `detalle_producto`
-  MODIFY `id_detalle_productos` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detalle_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa`
 --
 ALTER TABLE `mesa`
-  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_mesa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `mesero`
 --
 ALTER TABLE `mesero`
-  MODIFY `id_mesero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_mesero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
@@ -236,7 +286,8 @@ ALTER TABLE `cliente`
 -- Filtros para la tabla `detalle_producto`
 --
 ALTER TABLE `detalle_producto`
-  ADD CONSTRAINT `detalle_producto_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
+  ADD CONSTRAINT `detalle_producto_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`),
+  ADD CONSTRAINT `detalle_producto_ibfk_3` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
 
 --
 -- Filtros para la tabla `pedido`
@@ -244,8 +295,7 @@ ALTER TABLE `detalle_producto`
 ALTER TABLE `pedido`
   ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`id_mesa`) REFERENCES `mesa` (`id_mesa`),
   ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`id_mesero`) REFERENCES `mesero` (`id_mesero`),
-  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`),
-  ADD CONSTRAINT `pedido_ibfk_4` FOREIGN KEY (`id_detalle_productos`) REFERENCES `detalle_producto` (`id_detalle_productos`);
+  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id_cliente`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

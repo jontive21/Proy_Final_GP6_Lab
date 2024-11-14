@@ -4,6 +4,7 @@
  */
 package Vistas;
 
+import Entidades.Cliente;
 import Entidades.DetalleProducto;
 import Entidades.Mesa;
 import Entidades.Mesero;
@@ -21,10 +22,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,6 +47,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private static int mesasAgregadas;
     private DefaultTableModel modelo;
     private ViewPedido viewPedido;
+    private int idMesaSeleccionada = -1;
     /**
      * Creates new form ViewMenuPrincipal
      */
@@ -60,6 +64,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         actualizarBotonesEstadoMesas();
         configurarTabla();
         cargarProductosComboBox();
+        configurarBotonesMesas();
     }
 
     /**
@@ -322,8 +327,6 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jDialog3.setPreferredSize(new java.awt.Dimension(828, 540));
-
         jPanel4.setBackground(new java.awt.Color(51, 0, 0));
         jPanel4.setPreferredSize(new java.awt.Dimension(828, 540));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -364,15 +367,23 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jtDetallePedido.setBackground(new java.awt.Color(176, 4, 47));
         jtDetallePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID Producto", "Nombre", "Cantidad", "Monto", "Nombre Cliente"
+                "ID Producto", "Nombre", "Cantidad", "Subtotal", "Total", "Nombre Cliente"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jtDetallePedido);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 740, 290));
@@ -1109,6 +1120,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         jDialog3.pack();
         jDialog3.setLocationRelativeTo(this);
         jDialog3.setVisible(true);
+        
     }//GEN-LAST:event_JbTomarPedidoMesa1ActionPerformed
 
     private void JbTomarPedidoMesa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbTomarPedidoMesa2ActionPerformed
@@ -1128,68 +1140,67 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JbCancelarDetallePedidoActionPerformed
 
     private void JbFinalizarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbFinalizarDetallePedidoActionPerformed
-        int idMesa = obtenerIdMesaSeleccionada();
+         int idMesa = obtenerMesaSeleccionada();
     int filaCliente = 0; // Ajusta esta fila según corresponda
 
-    if (jtDetallePedido.getRowCount() > 0) {
-        // Obtener el nombre del cliente desde la columna correspondiente
-        String nombreCliente = (String) jtDetallePedido.getValueAt(filaCliente, 4);  // Suponiendo que el nombre está en la columna 4
+    // Obtener el nombre del cliente desde la columna 5 de jtDetallePedido
+    String nombreCliente = (String) jtDetallePedido.getValueAt(filaCliente, 5); // Columna 5: Nombre del Cliente
+    if (nombreCliente == null || nombreCliente.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "El nombre del cliente no es válido.");
+        return;
+    }
 
-        ClienteData clienteData = new ClienteData();
-        int idCliente = clienteData.agregarCliente(nombreCliente, idMesa);
+    // Crear un nuevo cliente y obtener su ID
+    ClienteData cliente = new ClienteData();
+    cliente.agregarCliente(nombreCliente, idMesa);
+    int idCliente = cliente.obtenerIdClientePorNombreYMesa(nombreCliente, idMesa);
 
-        if (idCliente > 0) {
-            DetalleProductoData detalleProductoData = new DetalleProductoData();
-            List<Producto> productos = new ArrayList<>();
+    // Crear una lista de productos basados en los datos de la tabla
+    List<Producto> productos = new ArrayList<>();
+    for (int i = 0; i < jtDetallePedido.getRowCount(); i++) {
+        int idProducto = (int) jtDetallePedido.getValueAt(i, 0); // Columna 0: ID del producto
+        String nombreProducto = (String) jtDetallePedido.getValueAt(i, 1); // Columna 1: Nombre del producto
+        int cantidad = (int) jtDetallePedido.getValueAt(i, 2); // Columna 2: Cantidad del producto
 
-            for (int i = 0; i < jtDetallePedido.getRowCount(); i++) {
-                // Convertir los valores al tipo adecuado
-                int idProducto = (int) jtDetallePedido.getValueAt(i, 0);
-                String nombreProducto = (String) jtDetallePedido.getValueAt(i, 1);
-                int cantidad = (int) jtDetallePedido.getValueAt(i, 2);
-                
-                // Convertir a double y luego a string si es necesario
-                double precioUnitario = ((Number) jtDetallePedido.getValueAt(i, 3)).doubleValue();
-                double subtotal = ((Number) jtDetallePedido.getValueAt(i, 4)).doubleValue();
+        // Obtener el precio unitario asegurando que sea de tipo double
+        double precioUnitario = ((Number) jtDetallePedido.getValueAt(i, 3)).doubleValue(); // Columna 3: Precio unitario
 
-                Producto producto = new Producto(idProducto, nombreProducto, cantidad, precioUnitario, "");
-                productos.add(producto);
-            }
+        // Obtener el subtotal (Cantidad * Precio Unitario)
+        double subtotal = ((Number) jtDetallePedido.getValueAt(i, 4)).doubleValue(); // Columna 4: Subtotal
 
-            // Crear el pedido principal sin idDetalleProductos, acorde a la firma de tu método
-            int idMesero = obtenerIdMeseroSeleccionado();
-            String fechaPedido = obtenerFechaYHoraActual();
-            String estado = "activo";
-            String pagado = "no";
-            double montoTotal = calcularMontoTotalPedido();
+        // Crear el objeto Producto y agregarlo a la lista
+        Producto producto = new Producto(idProducto, nombreProducto, cantidad, precioUnitario, "");
+        productos.add(producto);
+    }
 
-            PedidoData pedidoData = new PedidoData();
-            int idPedido = pedidoData.crearPedido(idMesa, idMesero, idCliente, fechaPedido, estado, pagado, montoTotal);
+    // Obtener los datos adicionales para crear el pedido
+    int idMesero = obtenerIdMeseroSeleccionado();
+    LocalDateTime fechaPedido = LocalDateTime.now();  // Fecha y hora actuales
+    String estado = "activo";
+    String pagado = "no";
+    double montoTotal = calcularMontoTotalPedido();  // Calcular el total del pedido
 
-            if (idPedido > 0) {
-                // Agregar productos al pedido
-                pedidoData.agregarProductosAlPedido(idPedido, productos);
-                
-                JOptionPane.showMessageDialog(this, "Pedido creado exitosamente.");
-                actualizarVistaPedidos(idPedido, idCliente, idMesa, idMesero, montoTotal, fechaPedido, estado, pagado);
-                limpiarDetallePedido();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al crear el pedido.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al crear el cliente.");
-        }
+    // Crear el pedido en la base de datos
+    PedidoData pedidoData = new PedidoData();
+    int idPedido = pedidoData.crearPedido(idMesa, idMesero, idCliente, fechaPedido, 
+                                     estado, pagado, montoTotal, productos);
+
+    if (idPedido > 0) {
+        // Agregar los productos al pedido en la base de datos
+        pedidoData.agregarProductosAlPedido(idPedido ,productos);
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Pedido creado exitosamente.");
+        actualizarVistaPedidos(idPedido, idCliente, idMesa, idMesero, montoTotal, fechaPedido.toString(), estado, pagado);
+
+        // Limpiar la vista de detalle del pedido
+        limpiarDetallePedido(); // Limpiar la tabla y los campos una vez que el pedido se complete
     } else {
-        JOptionPane.showMessageDialog(this, "La tabla de detalles de pedido está vacía.");
+        // Mostrar mensaje de error si no se pudo crear el pedido
+        JOptionPane.showMessageDialog(this, "Error al crear el pedido.");
     }
-    }
-    
 
 
-// Método para obtener el idPedido (puedes modificarlo para obtener el id correcto)
-private int obtenerIdPedido() {
-    // Retorna el id del pedido actual (reemplaza con tu lógica para obtener el idPedido)
-    return 1; // Ejemplo: reemplaza con el id correcto
     }//GEN-LAST:event_JbFinalizarDetallePedidoActionPerformed
 
     private void JbEliminarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbEliminarDetallePedidoActionPerformed
@@ -1558,31 +1569,6 @@ private int obtenerIdPedido() {
         return total;
     }
 
-        private int obtenerIdMesaSeleccionada() {
-            try {
-            // Verificar si hay una mesa seleccionada
-            if (selectedLabel == null) {
-                JOptionPane.showMessageDialog(this, "Por favor seleccione una mesa");
-                return -1;
-            }
-
-            // Obtener el objeto Mesa almacenado en la propiedad del JLabel
-            Mesa mesa = (Mesa) selectedLabel.getClientProperty("mesa");
-
-            // Verificar si se pudo obtener el objeto Mesa
-            if (mesa == null) {
-                JOptionPane.showMessageDialog(this, "Error: La mesa seleccionada no contiene información válida");
-                return -1;
-            }
-
-            // Retornar el ID de la mesa
-            return mesa.getIdMesa();
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al obtener el ID de la mesa: " + e.getMessage());
-            return -1;
-        }
-      }
 
         private int obtenerIdMeseroSeleccionado() {
             try {
@@ -1634,6 +1620,48 @@ private int obtenerIdPedido() {
                 JOptionPane.showMessageDialog(this, "Error al limpiar el detalle del pedido: " + e.getMessage());
             }
         }
+        
+        private void configurarBotonesMesas() {
+        JButton[] botonesMesas = {
+            JbTomarPedidoMesa1, JbTomarPedidoMesa2, JbTomarPedidoMesa3, JbTomarPedidoMesa4,
+            JbTomarPedidoMesa5, JbTomarPedidoMesa6, JbTomarPedidoMesa7, JbTomarPedidoMesa8,
+            JbTomarPedidoMesa9, JbTomarPedidoMesa10, JbTomarPedidoMesa11, JbTomarPedidoMesa12
+        };
+
+        // Asociamos el ActionListener a todos los botones de las mesas
+        for (int i = 0; i < botonesMesas.length; i++) {
+            int numeroMesa = i + 1;  // El número de mesa va del 1 al 12
+
+            botonesMesas[i].setActionCommand(String.valueOf(numeroMesa));  // Establecemos el ActionCommand con el número de mesa
+
+            botonesMesas[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Obtener el número de mesa desde el ActionCommand del botón
+                    idMesaSeleccionada = obtenerIdMesaSeleccionada(e); // Obtener el ID usando el ActionCommand
+
+                    System.out.println("El ID de la mesa seleccionada es: " + idMesaSeleccionada);
+
+                    // Mostrar el diálogo para la mesa seleccionada
+                    jDialog3.pack();
+                    jDialog3.setLocationRelativeTo(ViewMenuPrincipal.this);
+                    jDialog3.setVisible(true);
+                }
+            });
+        }
+    }
+
+    // Método para obtener el ID de la mesa seleccionada utilizando el ActionCommand del botón
+    private int obtenerIdMesaSeleccionada(ActionEvent e) {
+        // Obtener el número de la mesa desde el ActionCommand del botón presionado
+        String comando = e.getActionCommand();  // El ActionCommand es el número de la mesa
+        return Integer.parseInt(comando); // Convertimos el ActionCommand a un número de mesa
+    }
+
+    // Método para acceder al número de la mesa seleccionada desde otras partes del código
+    public int obtenerMesaSeleccionada() {
+        return idMesaSeleccionada;
+    }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> JCEstadoDeMesa;

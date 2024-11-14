@@ -4,8 +4,14 @@
  */
 package Vistas;
 
+import Entidades.Conexion;
+import Entidades.Pedido;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
-
+import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author USUARIO
@@ -17,6 +23,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
      */
     public ViewPedido() {
         initComponents();
+        
     }
 
     /**
@@ -37,20 +44,22 @@ public class ViewPedido extends javax.swing.JInternalFrame {
         jButtonEntregar = new javax.swing.JButton();
         jButtonAnulado = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtpedidos = new javax.swing.JTable();
         jButtonTicket = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(102, 0, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(238, 238, 93));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pedido-en-linea.png"))); // NOI18N
         jLabel1.setText("PEDIDOS");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 0, 0));
         jButton1.setText("X");
@@ -59,27 +68,9 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(773, 9, 43, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(198, 198, 198)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 15, 825, -1));
 
         pagado.setBackground(new java.awt.Color(102, 0, 0));
         pagado.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -91,6 +82,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 pagadojBtnBuscar(evt);
             }
         });
+        jPanel1.add(pagado, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 434, 137, 40));
 
         jButtonModificar.setBackground(new java.awt.Color(102, 0, 0));
         jButtonModificar.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -102,6 +94,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButtonModificarjBtnBuscar(evt);
             }
         });
+        jPanel1.add(jButtonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 273, -1, 40));
 
         jButtonEntregar.setBackground(new java.awt.Color(102, 0, 0));
         jButtonEntregar.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -113,6 +106,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButtonEntregarjBtnBuscar(evt);
             }
         });
+        jPanel1.add(jButtonEntregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 492, 137, 40));
 
         jButtonAnulado.setBackground(new java.awt.Color(102, 0, 0));
         jButtonAnulado.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -124,11 +118,12 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButtonAnuladojBtnBuscar(evt);
             }
         });
+        jPanel1.add(jButtonAnulado, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 377, 137, 40));
 
-        jTable1.setBackground(new java.awt.Color(102, 0, 0));
-        jTable1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtpedidos.setBackground(new java.awt.Color(102, 0, 0));
+        jtpedidos.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jtpedidos.setForeground(new java.awt.Color(255, 255, 255));
+        jtpedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -139,7 +134,9 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtpedidos);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 115, 556, 417));
 
         jButtonTicket.setBackground(new java.awt.Color(102, 0, 0));
         jButtonTicket.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
@@ -151,48 +148,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
                 jButtonTicketjBtnBuscar(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pagado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEntregar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAnulado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonTicket, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonModificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(65, 65, 65))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 158, Short.MAX_VALUE)
-                        .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAnulado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)
-                        .addComponent(pagado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonEntregar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(34, 34, 34))
-        );
+        jPanel1.add(jButtonTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 325, 137, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -234,9 +190,37 @@ public class ViewPedido extends javax.swing.JInternalFrame {
 
     //metodos para agregar el pedido a tabla
     public void agregarPedidoATabla(int idPedido, int idCliente, int idMesa, int idMesero, double montoTotal, String fechaPedido, String estado, String pagado) {
-    DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+    DefaultTableModel modelo = (DefaultTableModel) jtpedidos.getModel();
     Object[] fila = {idPedido, idCliente, idMesa, idMesero, montoTotal, fechaPedido, estado, pagado};
     modelo.addRow(fila);
+}
+    
+    
+
+   
+    
+    private void mostrarPedidosEnTabla(List<Pedido> pedidos) {
+    DefaultTableModel modelo = (DefaultTableModel) jtpedidos.getModel();
+    modelo.setRowCount(0); // Limpia la tabla antes de agregar datos
+
+    // Define las columnas que quieres mostrar en la tabla
+    String[] columnas = {"ID Pedido", "Cliente", "Mesa", "Mesero", "Monto Total", "Fecha", "Estado", "Pagado"};
+    modelo.setColumnIdentifiers(columnas);
+
+    // Itera sobre la lista de pedidos y agrega una fila por cada pedido
+    for (Pedido pedido : pedidos) {
+        Object[] fila = {
+            pedido.getIdPedido(),
+            pedido.getCliente().getNombre(), // Asumiendo que tienes un método getNombre() en Cliente
+            pedido.getMesa().getIdMesa(), // Asumiendo que tienes un método getNumero() en Mesa
+            pedido.getMesero().getNombre(), // Asumiendo que tienes un método getNombre() en Mesero
+            pedido.getMontoTotal(),
+            pedido.getFecha(),
+            pedido.isEntregado() ? "Entregado" : "No entregado",
+            pedido.isPagado() ? "Pagado" : "No Pagado"
+        };
+        modelo.addRow(fila);
+    }
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -249,7 +233,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtpedidos;
     private javax.swing.JButton pagado;
     // End of variables declaration//GEN-END:variables
 }
