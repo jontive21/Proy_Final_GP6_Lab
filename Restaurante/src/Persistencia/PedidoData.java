@@ -238,8 +238,64 @@ public class PedidoData {
         return pedidos;
     }
           
-          
+          public String detalleConcatenado(int idPedido) {
+    StringBuilder detalle = new StringBuilder();
+    String sql = "SELECT p.nombre, p.tipo_producto AS tipo, dp.cantidad " +
+                 "FROM detalle_producto dp " +
+                 "JOIN producto p ON dp.id_producto = p.id_producto " +
+                 "WHERE dp.id_pedido = ?";
+
+    try (PreparedStatement stmt = con.prepareStatement(sql)) { 
+        stmt.setInt(1, idPedido);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            String nombre = rs.getString("nombre");
+            String tipo = rs.getString("tipo");
+            int cantidad = rs.getInt("cantidad");
+
+            // Concatenación
+            detalle.append(nombre).append(" (").append(tipo).append(") - Cantidad: ").append(cantidad).append("\n");
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error al obtener el detalle del pedido: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    return detalle.toString();
 }
 
-    
+public Pedido obtenerPedidoPorId(int idPedido) {
+    Pedido pedido = null;
+    String sql = "SELECT * FROM pedido WHERE id_pedido = ?";
+
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ps.setInt(1, idPedido);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int idCliente = rs.getInt("id_cliente");
+            int idMesero = rs.getInt("id_mesero");
+            int idMesa = rs.getInt("id_mesa");
+            double montoTotal = rs.getDouble("monto");
+            boolean pagado = rs.getBoolean("pagado");
+            boolean entregado = rs.getString("estado").equals("Entregado");
+            LocalDateTime fecha = rs.getTimestamp("fecha_pedido").toLocalDateTime();
+
+            Cliente cliente = new ClienteData().buscarClientePorId(idCliente);
+            Mesero mesero = new MeseroData().buscarMeseroPorId(idMesero);
+            Mesa mesa = new MesaData().buscarMesaPorId(idMesa);
+
+            pedido = new Pedido(idPedido, cliente, mesero, mesa, null, montoTotal, pagado, entregado, fecha);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener el pedido: " + e.getMessage());
+    }
+
+    return pedido;
+}
+
+
+}
+
+   
 

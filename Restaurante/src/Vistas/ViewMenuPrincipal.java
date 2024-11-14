@@ -1143,7 +1143,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JbTomarPedidoMesa5ActionPerformed
 
     private void JbCancelarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCancelarDetallePedidoActionPerformed
-        dispose();
+        jDialog3.dispose();
     }//GEN-LAST:event_JbCancelarDetallePedidoActionPerformed
 
     private void JbFinalizarDetallePedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbFinalizarDetallePedidoActionPerformed

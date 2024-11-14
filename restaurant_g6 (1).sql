@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2024 a las 06:06:29
+-- Tiempo de generación: 14-11-2024 a las 18:43:34
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -53,7 +53,8 @@ INSERT INTO `cliente` (`id_cliente`, `nombre`, `id_mesa`) VALUES
 (13, 'arian', 3),
 (14, 'Macumbero', 3),
 (15, 'gallardo', 3),
-(16, 'xawe', 3);
+(16, 'xawe', 3),
+(17, 'jer', 1);
 
 -- --------------------------------------------------------
 
@@ -74,7 +75,6 @@ CREATE TABLE `detalle_producto` (
 --
 
 INSERT INTO `detalle_producto` (`id_detalle_productos`, `id_pedido`, `id_producto`, `cantidad`, `monto`) VALUES
-(14, 9, 3, 3, 1500),
 (15, 10, 2, 4, 1200),
 (16, 10, 2, 4, 4800);
 
@@ -87,7 +87,7 @@ INSERT INTO `detalle_producto` (`id_detalle_productos`, `id_pedido`, `id_product
 CREATE TABLE `mesa` (
   `id_mesa` int(11) NOT NULL,
   `capacidad` int(11) DEFAULT NULL,
-  `estado` varchar(10) NOT NULL DEFAULT 'Libre'
+  `estado` varchar(20) NOT NULL DEFAULT 'Libre'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `mesa` (
 --
 
 INSERT INTO `mesa` (`id_mesa`, `capacidad`, `estado`) VALUES
-(1, 2, 'Libre'),
+(1, 5, 'Ocupada'),
 (2, 2, 'Libre'),
 (3, 2, 'Ocupada'),
 (4, 4, 'libre'),
@@ -133,7 +133,7 @@ CREATE TABLE `pedido` (
   `id_mesero` int(11) DEFAULT NULL,
   `id_cliente` int(11) DEFAULT NULL,
   `fecha_pedido` datetime DEFAULT current_timestamp(),
-  `estado` varchar(10) NOT NULL,
+  `estado` varchar(20) NOT NULL,
   `pagado` varchar(10) NOT NULL,
   `monto` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -143,16 +143,7 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `id_mesa`, `id_mesero`, `id_cliente`, `fecha_pedido`, `estado`, `pagado`, `monto`) VALUES
-(1, 1, 2, 7, '2024-11-14 00:12:52', 'activo', 'no', 3600),
-(2, 5, 2, 8, '2024-11-14 00:14:18', 'activo', 'no', 4200),
-(3, 5, 2, 9, '2024-11-14 00:18:23', 'activo', 'no', 3200),
-(4, 5, 2, 10, '2024-11-14 00:35:50', 'activo', 'no', 7500),
-(5, 5, 2, 11, '2024-11-14 00:38:24', 'activo', 'no', 3600),
-(6, 5, 2, 12, '2024-11-14 00:40:02', 'activo', 'no', 7500),
-(7, 3, 2, 13, '2024-11-14 00:44:08', 'activo', 'no', 1800),
-(8, 3, 2, 14, '2024-11-14 01:13:25', 'activo', 'no', 4800),
-(9, 3, 2, 15, '2024-11-14 01:23:22', 'activo', 'no', 4500),
-(10, 3, 2, 16, '2024-11-14 01:25:20', 'activo', 'no', 4800);
+(10, 3, 2, 16, '2024-11-14 01:25:20', 'activo', 'si', 4800);
 
 -- --------------------------------------------------------
 
@@ -240,13 +231,13 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_producto`
 --
 ALTER TABLE `detalle_producto`
-  MODIFY `id_detalle_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_detalle_productos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `mesa`
@@ -264,7 +255,7 @@ ALTER TABLE `mesero`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`

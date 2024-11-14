@@ -25,6 +25,7 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     public ViewPedido() {
         initComponents();
         mostrarPedidosEnTabla();
+
     }
 
     /**
@@ -36,6 +37,12 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialogTicket = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButtonImprimir = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -46,6 +53,68 @@ public class ViewPedido extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtpedidos = new javax.swing.JTable();
         jButtonTicket = new javax.swing.JButton();
+
+        jPanel3.setBackground(new java.awt.Color(68, 4, 4));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Georgia", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 204, 204));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/factura.png"))); // NOI18N
+        jLabel2.setText("TICKET");
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 260, 80));
+
+        jTable1.setBackground(new java.awt.Color(133, 23, 23));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id Ticket", "Detalle", "Mesa n°", "Fecha y Hora", "Monto Total"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+
+        jPanel3.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 870, 150));
+
+        jButtonImprimir.setBackground(new java.awt.Color(163, 45, 45));
+        jButtonImprimir.setFont(new java.awt.Font("Georgia", 1, 18)); // NOI18N
+        jButtonImprimir.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonImprimir.setText("Imprimir Ticket");
+        jButtonImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 270, 210, 40));
+
+        javax.swing.GroupLayout jDialogTicketLayout = new javax.swing.GroupLayout(jDialogTicket.getContentPane());
+        jDialogTicket.getContentPane().setLayout(jDialogTicketLayout);
+        jDialogTicketLayout.setHorizontalGroup(
+            jDialogTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialogTicketLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 933, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jDialogTicketLayout.setVerticalGroup(
+            jDialogTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialogTicketLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         jPanel1.setBackground(new java.awt.Color(51, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -214,8 +283,22 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonAnuladojBtnBuscar
 
     private void jButtonTicketjBtnBuscar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTicketjBtnBuscar
-        // TODO add your handling code here:
+    int filaSeleccionada = jtpedidos.getSelectedRow(); // Obtén la fila seleccionada de jtpedidos
+    
+    if (filaSeleccionada != -1) { // Verifica si se seleccionó una fila
+        int idPedido = (int) jtpedidos.getValueAt(filaSeleccionada, 0); // Obtén el ID del pedido
+        mostrarTablaTicket(idPedido); // Llama al método para mostrar los detalles del pedido
+        jDialogTicket.pack();
+        jDialogTicket.setLocationRelativeTo(this);
+        jDialogTicket.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, selecciona un pedido para mostrar su ticket.");
+    }
     }//GEN-LAST:event_jButtonTicketjBtnBuscar
+
+    private void jButtonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirActionPerformed
+       JOptionPane.showMessageDialog(this, "Imprimiendo su ticket pipipi *ruido de impresora* ");
+    }//GEN-LAST:event_jButtonImprimirActionPerformed
 
     //metodos para agregar el pedido a tabla
     public void agregarPedidoATabla(int idPedido, int idCliente, int idMesa, int idMesero, double montoTotal, String fechaPedido, String estado, String pagado) {
@@ -224,11 +307,6 @@ public class ViewPedido extends javax.swing.JInternalFrame {
     modelo.addRow(fila);
 }
     
-    
-
-   
-    
-   
     
     private void mostrarPedidosEnTabla() {
     PedidoData pedidoData = new PedidoData();
@@ -251,16 +329,41 @@ public class ViewPedido extends javax.swing.JInternalFrame {
         modelo.addRow(fila);
     }
 }
+private void mostrarTablaTicket(int idPedido) {
+    PedidoData pedidoData = new PedidoData();
+    Pedido pedido = pedidoData.obtenerPedidoPorId(idPedido); 
+
+    if (pedido != null) {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); 
+
+        String detalle = pedidoData.detalleConcatenado(pedido.getIdPedido());
+        Object[] fila = {
+            pedido.getIdPedido(),
+            detalle,
+            pedido.getMesa().getIdMesa(),
+            pedido.getFecha().toString(),
+            pedido.getMontoTotal()
+        };
+        modelo.addRow(fila);  
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAnulado;
     private javax.swing.JButton jButtonEntregar;
+    private javax.swing.JButton jButtonImprimir;
     private javax.swing.JButton jButtonTicket;
+    private javax.swing.JDialog jDialogTicket;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jtpedidos;
     private javax.swing.JButton pagado;
     // End of variables declaration//GEN-END:variables
