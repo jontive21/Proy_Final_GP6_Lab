@@ -138,7 +138,7 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         JlblEstadoMesa = new javax.swing.JLabel();
         btnProductos = new javax.swing.JButton();
         jbPedidos = new javax.swing.JButton();
-        btnProductos2 = new javax.swing.JButton();
+        btnEstadisticas = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jlblNombreLoggin = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -664,22 +664,22 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         });
         jPanel1.add(jbPedidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 240, -1));
 
-        btnProductos2.setBackground(new java.awt.Color(102, 0, 0));
-        btnProductos2.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        btnProductos2.setForeground(new java.awt.Color(255, 204, 153));
-        btnProductos2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/factura.png"))); // NOI18N
-        btnProductos2.setText("Facturacion");
-        btnProductos2.setToolTipText("");
-        btnProductos2.setBorderPainted(false);
-        btnProductos2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnProductos2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btnProductos2.setIconTextGap(12);
-        btnProductos2.addActionListener(new java.awt.event.ActionListener() {
+        btnEstadisticas.setBackground(new java.awt.Color(102, 0, 0));
+        btnEstadisticas.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
+        btnEstadisticas.setForeground(new java.awt.Color(255, 204, 153));
+        btnEstadisticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/factura.png"))); // NOI18N
+        btnEstadisticas.setText("Estadisticas");
+        btnEstadisticas.setToolTipText("");
+        btnEstadisticas.setBorderPainted(false);
+        btnEstadisticas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnEstadisticas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnEstadisticas.setIconTextGap(12);
+        btnEstadisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProductos2ActionPerformed(evt);
+                btnEstadisticasActionPerformed(evt);
             }
         });
-        jPanel1.add(btnProductos2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        jPanel1.add(btnEstadisticas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(219, 198, 83));
@@ -1103,9 +1103,16 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
         vps.moveToFront();
     }//GEN-LAST:event_jbPedidosActionPerformed
 
-    private void btnProductos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductos2ActionPerformed
+    private void btnEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstadisticasActionPerformed
+        ViewEstadisticas ve = new ViewEstadisticas(nombreMesero);
+        ve.setSize(1000,650);
+        escritorio.setLayout(null);
+        escritorio.add(ve);
+        ve.setVisible(true);
+        ve.moveToFront();
         
-    }//GEN-LAST:event_btnProductos2ActionPerformed
+        
+    }//GEN-LAST:event_btnEstadisticasActionPerformed
 
     private void JbAñadirMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbAñadirMesaActionPerformed
         mesasList=md.listarMesas();
@@ -1706,9 +1713,9 @@ public class ViewMenuPrincipal extends javax.swing.JInternalFrame {
     private javax.swing.JLabel JlblNumMesa;
     private javax.swing.JTextField JtCapacidadMesas;
     private javax.swing.JTextField JtModificarCapMesas;
+    private javax.swing.JButton btnEstadisticas;
     private javax.swing.JButton btnProductos;
     private javax.swing.JButton btnProductos1;
-    private javax.swing.JButton btnProductos2;
     private javax.swing.JComboBox<String> cantidadMesasComboBox;
     private javax.swing.JDesktopPane escritorio;
     private javax.swing.JDialog jDialog1;

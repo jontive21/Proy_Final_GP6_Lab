@@ -19,6 +19,7 @@ import java.util.List;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 public class PedidoData {
@@ -164,6 +165,80 @@ public class PedidoData {
                 JOptionPane.showMessageDialog(null, "Error al eliminar el pedido: " + e.getMessage());
             }
         }
+        
+          public List<Pedido> obtenerPedidosPorFecha(Date fechain,int id_mesero) {
+              
+        List<Pedido> pedidos = new ArrayList<>();
+        
+        String sql = "SELECT * FROM pedido WHERE DATE(fecha_pedido) = ? AND id_mesero = ? AND pagado = 'si' ";
+
+        try {
+               PreparedStatement ps = con.prepareStatement(sql);
+                ps.setDate(1, new java.sql.Date(fechain.getTime()));
+                ps.setInt(2, id_mesero);
+             ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idPedido = rs.getInt("id_pedido");
+                int idCliente = rs.getInt("id_cliente");
+                int idMesero = rs.getInt("id_mesero");
+                int idMesa = rs.getInt("id_mesa");
+                double montoTotal = rs.getDouble("monto");
+                boolean pagado = rs.getBoolean("pagado");
+                boolean entregado = rs.getString("estado").equals("Entregado");
+                LocalDateTime fecha = rs.getTimestamp("fecha_pedido").toLocalDateTime();
+
+                Cliente cliente = new ClienteData().buscarClientePorId(idCliente);
+                Mesero mesero = new MeseroData().buscarMeseroPorId(idMesero);
+                Mesa mesa = new MesaData().buscarMesaPorId(idMesa);
+
+                Pedido pedido = new Pedido(idPedido, cliente, mesero, mesa, null, montoTotal, pagado, entregado, fecha);
+                pedidos.add(pedido);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los pedidos: " + e.getMessage());
+        }
+
+        return pedidos;
+    }
+        
+      public List<Pedido> obtenerPedidosParaSumar(Date fechain) {
+              
+        List<Pedido> pedidos = new ArrayList<>();
+        
+        String sql = "SELECT * FROM pedido WHERE DATE(fecha_pedido) = ? AND pagado = 'si' ";
+
+        try {
+               PreparedStatement ps = con.prepareStatement(sql);
+                ps.setDate(1, new java.sql.Date(fechain.getTime()));
+                
+             ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idPedido = rs.getInt("id_pedido");
+                int idCliente = rs.getInt("id_cliente");
+                int idMesero = rs.getInt("id_mesero");
+                int idMesa = rs.getInt("id_mesa");
+                double montoTotal = rs.getDouble("monto");
+                boolean pagado = rs.getBoolean("pagado");
+                boolean entregado = rs.getString("estado").equals("Entregado");
+                LocalDateTime fecha = rs.getTimestamp("fecha_pedido").toLocalDateTime();
+
+                Cliente cliente = new ClienteData().buscarClientePorId(idCliente);
+                Mesero mesero = new MeseroData().buscarMeseroPorId(idMesero);
+                Mesa mesa = new MesaData().buscarMesaPorId(idMesa);
+
+                Pedido pedido = new Pedido(idPedido, cliente, mesero, mesa, null, montoTotal, pagado, entregado, fecha);
+                pedidos.add(pedido);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener los pedidos: " + e.getMessage());
+        }
+
+        return pedidos;
+    }
+          
+          
 }
 
     
